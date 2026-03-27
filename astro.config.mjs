@@ -14,7 +14,7 @@ export default defineConfig({
     imageService: { build: 'compile', runtime: 'cloudflare-binding' },
   }),
   output: 'server',
-  site: 'https://astrology-i18n.3201300093.workers.dev',
+  site: 'https://astrology.idimi.com',
   trailingSlash: 'always',
   build: {
     concurrency: 4,

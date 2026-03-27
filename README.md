@@ -38,7 +38,7 @@ Updated for Astro v6!
 
 ### Live Demo
 
-- Production demo: <https://astrology-i18n.3201300093.workers.dev>
+- Production demo: <https://astrology.idimi.com>
 - Screenshot preview: `public/screenshot.webp`
 
 ### Prerequisites
