@@ -1,12 +1,16 @@
 <div align="center">
 
-# Astrology i18n — Multilingual Astro Blog Theme
+# Astrology i18n
 
-[![Astro](https://img.shields.io/badge/Astro-6-BC52EE?logo=astro)](https://astro.build) [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com) [![Node](https://img.shields.io/badge/Node-%E2%89%A5%2020-339933?logo=node.js)](https://nodejs.org) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+**A multilingual Astro 6 blog theme for content-first publishing**
 
-A professional, multilingual photo-and-prose theme built with **Astro 6** and **Tailwind CSS 4**. Start your global storytelling journey with per-locale routes, centralized dictionaries, SEO optimization, and a modern, responsive design.
+[![Astro](https://img.shields.io/badge/Astro-6-BC52EE?logo=astro)](https://astro.build)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Node](https://img.shields.io/badge/Node-%E2%89%A5%2020-339933?logo=node.js)](https://nodejs.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Demo](https://img.shields.io/badge/Live_Demo-astrology.idimi.com-0f172a)](https://astrology.idimi.com)
 
-Updated for Astro v6!
+A polished, responsive Astro theme built for multilingual blogs, editorial sites, and personal publishing. It ships with locale-aware routes, centralized translations, SEO-ready defaults, optimized images, and a clean reading experience out of the box.
 
 <a href="https://pagespeed.web.dev/analysis/https-astrology-yo7bu6q1-edgeone-app/nij513nbyr?form_factor=mobile">
   <img src="public/astrology-i18n-lighthouse-score.svg" alt="Lighthouse Score" width="300" />
@@ -14,142 +18,114 @@ Updated for Astro v6!
 
 </div>
 
-## Table of Contents
+## Contents
 
-- [Highlights](#-highlights)
-- [Getting Started](#-getting-started)
-- [Project Structure](#-project-structure)
-- [Internationalization (i18n)](#-internationalization-i18n)
-- [Content Authoring](#-content-authoring)
-- [Configuration & Integrations](#-configuration--integrations)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [Highlights](#highlights)
+- [Quick Start](#quick-start)
+- [Project Structure](#project-structure)
+- [Internationalization](#internationalization)
+- [Content Authoring](#content-authoring)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [License](#license)
 
-## ⚡️ Highlights
+## Highlights
 
-- **Deep Internationalization (i18n)**: Native support for language-prefixed routes (`/[lang]/`), centralized JSON dictionaries, and automatic fallback handling.
-- **Content Collections**: Type-safe frontmatter for Posts, Pages, and Authors.
-- **Performance First**: High Lighthouse scores with optimized assets, link prefetching, and minimal client-side JS.
-- **Astro 6 & Tailwind 4**: Built on the latest, cutting-edge stack for maximum developer experience.
-- **SEO Optimized**: Built-in canonical URLs, Open Graph tags, JSON-LD, sitemaps, and RSS feeds per locale.
-- **Full-Text Search**: Fast, client-side search powered by `astro-pagefind`.
+- **Multilingual by design**: language-prefixed routes, centralized dictionaries, and fallback-friendly localization.
+- **Content collections**: typed frontmatter for posts, pages, and authors.
+- **SEO ready**: canonical URLs, Open Graph tags, JSON-LD, sitemap, and RSS feeds.
+- **Fast by default**: optimized images, prefetching, minimal client-side JavaScript, and Pagefind search.
+- **Modern stack**: Astro 6, Tailwind CSS 4, MDX, Partytown, and Cloudflare-ready static output.
+- **Editorial layout**: built for long-form reading, featured media, and clear content hierarchy.
 
-## 同步维护约定
+## Quick Start
 
-- 三个仓库保持完整独立，不引入跨仓共享包或额外发布链路。
-- 以后做优化时，只手动同步“共同需要修改”的地方。
-- 构建脚本、部署脚本、环境变量和平台适配文件继续保持仓库各自独立。
+### Demo
 
-### 仓库角色
+- Live site: <https://astrology.idimi.com>
+- Preview image: `public/screenshot.webp`
 
-- `idimi`: Dokploy + Nixpacks 构建静态产物 + Cloudflare Worker 部署
-- `yunhe`: Dokploy + Nixpacks 构建静态产物 + EdgeOne 部署
-- `astrology-i18n`: Cloudflare 构建 + 部署
+### Requirements
 
-## 🚀 Getting Started
+- Node.js 20 or newer
+- pnpm
 
-### Live Demo
+### Install
 
-- Production demo: <https://astrology.idimi.com>
-- Screenshot preview: `public/screenshot.webp`
-
-### Prerequisites
-
-- **Node.js**: v20.0.0 or higher
-- **pnpm**: Recommended package manager
-
-### Installation
-
-1.  Clone the repository:
-
-    ```bash
-    git clone https://github.com/idimilabs/Astrology-i18n.git
-    cd Astrology-i18n
-    ```
-
-2.  Install dependencies:
-
-    ```bash
-    pnpm install
-    ```
-
-3.  Start the development server:
-    ```bash
-    pnpm run dev
-    ```
-    Open [http://localhost:4321](http://localhost:4321) to view it in the browser.
-
-### Build & Deploy
-
-This theme builds as a static site. `pnpm run build` writes the production output to `dist/`, and `wrangler.jsonc` serves that folder as static assets on Cloudflare.
-
-`wrangler.jsonc` uses:
-
-```jsonc
-{
-  "assets": {
-    "directory": "./dist"
-  }
-}
+```bash
+git clone https://github.com/idimilabs/Astrology-i18n.git
+cd Astrology-i18n
+pnpm install
 ```
 
-To build your site for production deployment:
+### Run locally
+
+```bash
+pnpm run dev
+```
+
+Open [http://localhost:4321](http://localhost:4321) in your browser.
+
+### Build and preview
 
 ```bash
 pnpm run build
-```
-
-To preview the production build locally:
-
-```bash
 pnpm run preview
 ```
 
-To deploy the built static output with Wrangler:
+`pnpm run build` outputs the static site to `dist/`.
+
+### Deploy
+
+The project is configured for static deployment with Wrangler:
 
 ```bash
-pnpm dlx wrangler deploy
+pnpm run deploy
 ```
 
-## 📂 Project Structure
-
-A quick look at the top-level files and directories you'll work with:
+## Project Structure
 
 ```text
 .
-├── public/                 # Static assets (images, fonts, etc.)
+├── public/                 # Static assets
 ├── src/
-│   ├── assets/             # Optimized assets (images processed by Astro)
-│   ├── components/         # Reusable UI components
-│   ├── content/            # Markdown/MDX content (posts, pages, authors)
-│   ├── i18n/               # Translation dictionaries (en.json, zh.json, etc.)
+│   ├── assets/             # Optimized images and media
+│   ├── components/         # Reusable UI pieces
+│   ├── content/            # Posts, pages, and authors
+│   ├── i18n/               # Translation dictionaries
 │   ├── layouts/            # Page layouts
-│   ├── pages/              # Astro pages and routes
-│   │   └── [lang]/         # Dynamic locale routes
-│   ├── styles/             # Global styles (CSS variables, resets)
-│   ├── utils/              # Helper functions (i18n, formatting)
-│   └── content.config.ts   # Content collections definition
-└── astro.config.mjs        # Astro configuration
+│   ├── pages/              # Route definitions
+│   ├── styles/             # Global styles
+│   ├── utils/              # Helpers and shared logic
+│   └── content.config.ts   # Content collections schema
+├── astro.config.mjs        # Astro configuration
+└── package.json            # Scripts and dependencies
 ```
 
-## 🌍 Internationalization (i18n)
+## Internationalization
 
-**Astrology i18n** comes with pre-configured support for 10 languages:
-`zh` (Default), `en`, `fr`, `es`, `ru`, `ja`, `ko`, `pt`, `de`, `id`.
+The theme supports 10 locales:
 
-### Adding a New Language
+`zh`, `en`, `fr`, `es`, `ru`, `ja`, `ko`, `pt`, `de`, `id`
 
-1.  **Update Config**: Add the language code to `src/utils/i18n.ts` and `src/content.config.ts`.
-2.  **Add Dictionary**: Create a new `<lang>.json` file in `src/i18n/`.
-3.  **Astro Config**: Update `astro.config.mjs` `i18n` settings if necessary.
+`en` is the default locale.
 
-### Fallback Strategy
+### Add a new language
 
-The theme uses a rewrite configuration. If a page doesn't exist in the requested language, it can be configured to serve content from the default language while maintaining the URL, or redirect.
+1. Add the locale code to `src/utils/i18n.ts`.
+2. Update `src/content.config.ts` if the content schema needs to recognize the locale.
+3. Create a matching dictionary in `src/i18n/<lang>.json`.
+4. Adjust `astro.config.mjs` if you need sitemap or routing changes.
 
-## ✍️ Content Authoring
+### Routing behavior
 
-Content lives in `src/content/posts/[lang]/`. Create a standard Markdown or MDX file:
+Locale-aware pages live under `src/pages/[lang]/`. If a localized page is missing, you can fall back to the default language while keeping the locale URL structure intact.
+
+## Content Authoring
+
+Posts live in `src/content/posts/[lang]/`. Pages and author profiles follow the same collection-driven pattern.
+
+Example frontmatter:
 
 ```yaml
 ---
@@ -160,57 +136,62 @@ category: "Astronomy"
 tags: ["Stars", "Night"]
 author: "Astro Learner"
 heroImage: "../assets/stars.jpg"
-locales: "en" # helper for filtering
+locales: "en"
 ---
 ```
 
-## 🛠 Configuration & Integrations
+Recommended practices:
 
-### GitHub Activity Calendar
+- Keep titles concise and descriptive.
+- Use `description` for search and social previews.
+- Add `heroImage` for posts that benefit from a strong visual lead.
+- Use `locales` to filter or scope content by language when needed.
 
-To display the contribution graph on the Author page:
+## Configuration
 
-1.  **Local Dev**: Create a `.env` file:
-    ```env
-    GITHUB_TOKEN=your_personal_access_token
-    ```
-2.  **Production**: Add `GITHUB_TOKEN` to your deployment platform's environment variables if you want live GitHub activity data.
-3.  **Fallback**: If `GITHUB_TOKEN` is not set, the theme falls back to an empty calendar so static builds stay reliable.
+### GitHub activity calendar
+
+The author page can show a contribution calendar.
+
+```env
+GITHUB_TOKEN=your_personal_access_token
+```
+
+- Set `GITHUB_TOKEN` locally for development.
+- Add it to your deployment environment if you want live GitHub activity data in production.
+- Without the token, the site falls back gracefully.
 
 ### Analytics
 
-The theme includes **Partytown** integration for performance-friendly analytics. Configure your GTM or analytics IDs in `src/components/analytics`.
+The project includes Partytown support for performance-friendly analytics. Configure your GTM or analytics IDs in `src/components/analytics`.
 
 ### Search
 
-Search is powered by **Pagefind**. The index is built automatically when you run `pnpm run build`.
+Search is powered by Pagefind and is generated automatically during `pnpm run build`.
 
-### Code Styling
+### Formatting
 
-The project uses **Prettier** for code formatting, configured via `.prettierrc`.
-
-To format the codebase:
+Prettier is configured for the codebase.
 
 ```bash
 pnpm run format
 ```
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome! Please follow these steps:
+Contributions are welcome.
 
-1.  Fork the project.
-2.  Create your feature branch (`git checkout -b feature/AmazingFeature`).
-3.  Commit your changes following [Conventional Commits](https://www.conventionalcommits.org/) (`git commit -m 'feat: Add some AmazingFeature'`).
-4.  Push to the branch.
-5.  Open a Pull Request.
+1. Fork the repository.
+2. Create a branch for your change.
+3. Commit with a clear Conventional Commit message.
+4. Open a pull request.
 
-## 📝 License
+## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+MIT. See [LICENSE](LICENSE) for details.
 
 ---
 
 <div align="center">
-  <p>Built with ❤️ by <a href="https://idimi.com">iDiMi</a></p>
+  <p>Built with care by <a href="https://idimi.com">iDiMi</a></p>
 </div>
