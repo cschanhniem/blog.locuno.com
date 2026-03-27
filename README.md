@@ -69,7 +69,17 @@ Updated for Astro v6!
 
 ### Build & Deploy
 
-This theme builds as a static site. `pnpm run build` writes the production output to `dist/`, and `wrangler.jsonc` is configured to serve that folder as static assets on Cloudflare.
+This theme builds as a static site. `pnpm run build` writes the production output to `dist/`, and `wrangler.jsonc` serves that folder as static assets on Cloudflare.
+
+`wrangler.jsonc` uses:
+
+```jsonc
+{
+  "assets": {
+    "directory": "./dist"
+  }
+}
+```
 
 To build your site for production deployment:
 
