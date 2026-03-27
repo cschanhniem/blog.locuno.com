@@ -66,20 +66,15 @@ const optimizedRemoteImage = isRemote
       format="avif"
       {...(typeof props.width === 'number' ? { width: props.width } : {})}
       {...(typeof props.height === 'number' ? { height: props.height } : {})}
-      inferSize={false}
     />
   ) : (
-    // Local assets without explicit size: allow astro:assets to infer.
-    <Image
-      src={props.src as any}
+    <img
+      src={props.src}
       alt={props.alt || ''}
       class={cls}
       loading={loading}
       decoding={decoding}
       fetchpriority={fetchpriority}
-      sizes={sizes}
-      format="avif"
-      inferSize={true}
     />
   )
 }

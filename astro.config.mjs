@@ -8,6 +8,7 @@ import icon from 'astro-icon';
 import pagefind from 'astro-pagefind';
 import { defineConfig } from 'astro/config';
 import { remarkModifiedTime } from './src/utils/remark-modified-time.mjs';
+import { remarkRemoteImages } from './src/utils/remark-remote-images.mjs';
 
 export default defineConfig({
   adapter: cloudflare(),
@@ -36,7 +37,7 @@ export default defineConfig({
   },
 
   markdown: {
-    remarkPlugins: [remarkModifiedTime],
+    remarkPlugins: [remarkRemoteImages, remarkModifiedTime],
   },
 
   integrations: [
