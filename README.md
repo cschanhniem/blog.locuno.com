@@ -34,6 +34,13 @@ Updated for Astro v6!
 - **SEO Optimized**: Built-in canonical URLs, Open Graph tags, JSON-LD, sitemaps, and RSS feeds per locale.
 - **Full-Text Search**: Fast, client-side search powered by `astro-pagefind`.
 
+## 同步维护约定
+
+- 本仓库保持完整独立，不引入跨仓共享包
+- 仅同步共同需要修改的代码结构、共享工具和工具性组件
+- 构建脚本、部署脚本、环境变量和平台适配文件保持仓库各自独立
+- 以后做优化时，先判断是否属于通用修改，再手动同步到其他相关仓库
+
 ## 🚀 Getting Started
 
 ### Live Demo
