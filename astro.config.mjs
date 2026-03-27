@@ -8,10 +8,11 @@ import icon from 'astro-icon';
 import pagefind from 'astro-pagefind';
 import { defineConfig } from 'astro/config';
 import { remarkModifiedTime } from './src/utils/remark-modified-time.mjs';
-import { remarkRemoteImages } from './src/utils/remark-remote-images.mjs';
 
 export default defineConfig({
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: { build: 'compile', runtime: 'cloudflare-binding' },
+  }),
   output: 'server',
   site: 'https://astrology-i18n.vercel.app',
   trailingSlash: 'always',
@@ -37,7 +38,7 @@ export default defineConfig({
   },
 
   markdown: {
-    remarkPlugins: [remarkRemoteImages, remarkModifiedTime],
+    remarkPlugins: [remarkModifiedTime],
   },
 
   integrations: [

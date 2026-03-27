@@ -1,6 +1,5 @@
 ---
 import { getCollection, type CollectionEntry, render } from 'astro:content';
-import ContentImage from '@/features/ContentImage.astro';
 import RelatedList from '@/widgets/RelatedList.astro';
 import PostLayout from '@/layouts/PostLayout.astro';
 import type { Lang } from '@/utils/i18n';
@@ -70,6 +69,6 @@ const postLayoutProps = {
 ---
 
 <PostLayout {...postLayoutProps}>
-  <Content components={{ img: ContentImage }} />
+  <Content />
   <RelatedList slot="after" lang={lang} category={entry.data.category} excludeId={entry.id} />
 </PostLayout>
