@@ -108,8 +108,8 @@ Polyglow is designed for content sites that need to feel credible, load fast, an
 ### Install
 
 ```bash
-git clone https://github.com/idimilabs/Polyglow.git
-cd Polyglow
+git clone git@github.com:cschanhniem/blog.locuno.com.git
+cd blog.locuno.com
 pnpm install
 ```
 
@@ -135,6 +135,28 @@ pnpm deploy
 ```
 
 The site is configured for static output and includes a Wrangler-based deploy script.
+
+## Cloudflare Auto Deploy
+
+This repo includes a GitHub Actions workflow at `.github/workflows/deploy.yml`.
+
+It runs on every push to `main` and on manual dispatch. The workflow:
+
+- installs dependencies with `pnpm`
+- builds the Astro site
+- deploys the static output with Wrangler
+
+### GitHub secret required
+
+Add this repository secret before relying on CI deploys:
+
+- `CLOUDFLARE_API_TOKEN`: a Cloudflare API token with `Workers Scripts:Edit` access for the account that owns the deployment
+
+### First-time setup checklist
+
+1. Create the `CLOUDFLARE_API_TOKEN` secret in GitHub repository settings.
+2. Ensure the Cloudflare account has a Workers subdomain enabled.
+3. If you want `https://blog.locuno.com` instead of the default `workers.dev` URL, attach the custom domain in Cloudflare after the first deploy.
 
 ## Project Structure
 

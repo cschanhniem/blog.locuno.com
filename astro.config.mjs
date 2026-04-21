@@ -10,7 +10,7 @@ import { remarkModifiedTime } from './src/utils/remark-modified-time.mjs';
 
 export default defineConfig({
   output: 'static',
-  site: 'https://polyglow.idimi.com',
+  site: 'https://blog.locuno.com',
   trailingSlash: 'always',
   build: {
     concurrency: 6,
