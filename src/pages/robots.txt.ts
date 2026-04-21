@@ -10,7 +10,7 @@ Sitemap: ${sitemapURL.href}
 
 export const GET: APIRoute = ({ site, url }) => {
   const base = site ?? url;
-  const sitemapURL = new URL('sitemap-index.xml', base);
+  const sitemapURL = new URL('sitemap.xml', base);
   return new Response(getRobotsTxt(sitemapURL), {
     headers: {
       'content-type': 'text/plain; charset=utf-8',

@@ -1,4 +1,5 @@
 import astroExpressiveCode from 'astro-expressive-code';
+import { copyFile } from 'node:fs/promises';
 import mdx from '@astrojs/mdx';
 import partytown from '@astrojs/partytown';
 import sitemap from '@astrojs/sitemap';
@@ -7,6 +8,17 @@ import icon from 'astro-icon';
 import pagefind from 'astro-pagefind';
 import { defineConfig } from 'astro/config';
 import { remarkModifiedTime } from './src/utils/remark-modified-time.mjs';
+
+const sitemapAlias = () => ({
+  name: 'sitemap-alias',
+  hooks: {
+    'astro:build:done': async ({ dir }) => {
+      const source = new URL('./sitemap-index.xml', dir);
+      const target = new URL('./sitemap.xml', dir);
+      await copyFile(source, target);
+    },
+  },
+});
 
 export default defineConfig({
   output: 'static',
@@ -57,6 +69,7 @@ export default defineConfig({
       themeCssSelector: (theme) => (theme.type === 'dark' ? '.dark' : ''),
     }),
     sitemap({
+      filter: (page) => page !== 'https://blog.locuno.com/' && !page.endsWith('/search/'),
       i18n: {
         defaultLocale: 'en',
         locales: {
@@ -65,6 +78,7 @@ export default defineConfig({
         },
       },
     }),
+    sitemapAlias(),
     mdx(),
     pagefind(),
     partytown({

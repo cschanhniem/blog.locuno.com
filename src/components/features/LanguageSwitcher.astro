@@ -1,7 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '@/utils/i18n';
-import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
+import { DEFAULT_LANG, SUPPORTED_LANGS, stripLocalePrefix } from '@/utils/i18n';
 import { t } from '@/utils/translations';
 
 interface Props {
@@ -21,8 +21,7 @@ const FLAG_MAP: Record<Lang, string> = {
 const currentFlag = FLAG_MAP[resolvedLang] ?? '🌐';
 const currentPath = Astro.url.pathname;
 const currentTail = `${Astro.url.search}${Astro.url.hash}`;
-const localePrefixPattern = new RegExp(`^/(${SUPPORTED_LANGS.join('|')})(?=/|$)`);
-const localeAgnosticPath = currentPath.replace(localePrefixPattern, '') || '/';
+const localeAgnosticPath = stripLocalePrefix(currentPath);
 ---
 
 <details class={`relative ${className ?? ''}`.trim()} data-lang-root>

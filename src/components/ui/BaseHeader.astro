@@ -1,6 +1,6 @@
 ---
 import type { Lang } from '@/utils/i18n';
-import { SUPPORTED_LANGS, DEFAULT_LANG } from '@/utils/i18n';
+import { SUPPORTED_LANGS, DEFAULT_LANG, stripLocalePrefix } from '@/utils/i18n';
 import { t } from '@/utils/translations';
 import { SEO } from 'astro-seo';
 import { getAbsoluteLocaleUrl, getRelativeLocaleUrl } from 'astro:i18n';
@@ -73,20 +73,24 @@ const absAuthorUrl = authorUrl
 
 const isArticle = Boolean(publishedTime);
 
-const ogLocaleMap: Record<string, string> = {
+const ogLocaleMap: Record<Lang, string> = {
   vi: 'vi_VN',
   en: 'en_US',
 };
-const ogLocale = ogLocaleMap[resolvedLang] || 'en_US';
-const ogAlternateLocales = SUPPORTED_LANGS.filter((l) => l !== resolvedLang).map(
-  (l) => ogLocaleMap[l] || 'en_US',
-);
+const languageTagMap: Record<Lang, string> = {
+  vi: 'vi-VN',
+  en: 'en-US',
+};
+const languageTag = languageTagMap[resolvedLang] ?? resolvedLang;
+const ogLocale = ogLocaleMap[resolvedLang] ?? 'en_US';
+const ogAlternateLocales = SUPPORTED_LANGS.filter((l) => l !== resolvedLang).map((l) => ogLocaleMap[l]);
 
+const localeAgnosticPath = stripLocalePrefix(Astro.url.pathname);
 const languageAlternates = SUPPORTED_LANGS.map((l) => ({
-  hrefLang: l,
-  href: getAbsoluteLocaleUrl(l, Astro.url.pathname),
+  hrefLang: languageTagMap[l] ?? l,
+  href: getAbsoluteLocaleUrl(l, localeAgnosticPath),
 }));
-const xDefaultHref = getAbsoluteLocaleUrl(DEFAULT_LANG, Astro.url.pathname);
+const xDefaultHref = getAbsoluteLocaleUrl(DEFAULT_LANG, localeAgnosticPath);
 
 const rawCanonical = canonical || new URL(Astro.url.pathname, Astro.site!).href;
 const finalCanonical = (() => {
@@ -114,7 +118,7 @@ const seoProps: any = {
       title: title || siteName,
       type: isArticle ? 'article' : 'website',
       image: absImage,
-      url: Astro.url.href,
+      url: finalCanonical,
     },
     optional: {
       description: metaDescription,
@@ -154,7 +158,7 @@ const seoProps: any = {
       { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
       { rel: 'shortcut icon', href: '/favicon.ico' },
       { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
-      { rel: 'sitemap', href: '/sitemap-index.xml' },
+      { rel: 'sitemap', href: '/sitemap.xml' },
       { rel: 'alternate', type: 'application/rss+xml', title: siteName, href: rssURL },
     ],
     meta: [
@@ -192,7 +196,7 @@ const seoProps: any = {
     const ld: any = {
       '@context': 'https://schema.org',
       '@type': isArticle ? 'Article' : 'WebPage',
-      inLanguage: resolvedLang,
+      inLanguage: languageTag,
       name: pageTitle,
       url: canonicalURL,
       description: metaDescription,
