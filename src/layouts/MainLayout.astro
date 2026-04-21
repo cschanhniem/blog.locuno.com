@@ -2,7 +2,6 @@
 import Header from '@/ui/Header.astro';
 import Footer from '@/ui/Footer.astro';
 import GTMHead from '@/analytics/GTMHead.astro';
-import GTMBody from '@/analytics/GTMBody.astro';
 import DynamicGlass from '@/features/DynamicGlass.astro';
 import type { Lang } from '@/utils/i18n';
 import { ClientRouter } from 'astro:transitions';
@@ -40,7 +39,6 @@ const dir = 'ltr';
       <Footer lang={resolvedLang} />
       <slot name="after" />
     </div>
-    <GTMBody />
     <DynamicGlass />
   </body>
 </html>
