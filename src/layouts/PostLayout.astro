@@ -28,7 +28,7 @@ interface Props {
 }
 
 const {
-  lang: langProp = 'zh',
+  lang: langProp = 'en',
   title,
   description,
   image,
@@ -44,7 +44,7 @@ const {
 } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (langProp as Lang | undefined) ??
-  'zh') as Lang;
+  'en') as Lang;
 
 const fmt = (d?: string | Date) => formatDate(d, resolvedLang);
 

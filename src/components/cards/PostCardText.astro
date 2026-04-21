@@ -1,5 +1,6 @@
 ---
 import type { Lang } from '@/utils/i18n';
+import { DEFAULT_LANG } from '@/utils/i18n';
 import { categoryLabel, tagLabel } from '@/utils/translations';
 import { formatDate } from '@/utils/date';
 
@@ -19,7 +20,7 @@ const {
   date,
   category,
   tags = [],
-  lang = 'zh',
+  lang = DEFAULT_LANG,
   class: className,
 } = Astro.props as Props;
 

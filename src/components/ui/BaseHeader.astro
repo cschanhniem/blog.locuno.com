@@ -23,7 +23,7 @@ interface Props {
 }
 
 const {
-  lang: langProp = 'zh',
+  lang: langProp = 'en',
   title,
   description,
   keywords,
@@ -41,7 +41,7 @@ const {
 
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (langProp as Lang) ??
-  'zh') as Lang;
+  'en') as Lang;
 
 const siteName = t(resolvedLang, 'site.name');
 const titleTemplate = t(resolvedLang, 'site.titleTemplate');
@@ -74,16 +74,8 @@ const absAuthorUrl = authorUrl
 const isArticle = Boolean(publishedTime);
 
 const ogLocaleMap: Record<string, string> = {
-  zh: 'zh_CN',
+  vi: 'vi_VN',
   en: 'en_US',
-  fr: 'fr_FR',
-  es: 'es_ES',
-  ru: 'ru_RU',
-  ja: 'ja_JP',
-  ko: 'ko_KR',
-  pt: 'pt_PT',
-  de: 'de_DE',
-  id: 'id_ID',
 };
 const ogLocale = ogLocaleMap[resolvedLang] || 'en_US';
 const ogAlternateLocales = SUPPORTED_LANGS.filter((l) => l !== resolvedLang).map(
@@ -158,7 +150,10 @@ const seoProps: any = {
   },
   extend: {
     link: [
-      { rel: 'icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+      { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
+      { rel: 'shortcut icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
       { rel: 'sitemap', href: '/sitemap-index.xml' },
       { rel: 'alternate', type: 'application/rss+xml', title: siteName, href: rssURL },
     ],

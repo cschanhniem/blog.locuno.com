@@ -1,0 +1,164 @@
+{
+  "site": {
+    "name": "Sổ Tay AI Locuno",
+    "titleTemplate": "%s · Sổ Tay AI Locuno",
+    "description": "AI, kỹ năng số và định hướng cho trẻ",
+    "twitter": {
+      "site": "@idimilabs",
+      "creator": "@Astro"
+    }
+  },
+  "language": {
+    "name": "Tiếng Việt",
+    "switch": "Chuyển ngôn ngữ",
+    "current": "Ngôn ngữ hiện tại"
+  },
+  "theme": {
+    "toggle": "Chuyển giao diện",
+    "light": "Sáng",
+    "dark": "Tối",
+    "system": "Theo hệ thống"
+  },
+  "dateFormat": "D MMM, YYYY",
+  "post": {
+    "publishedAt": "Ngày đăng",
+    "modifiedAt": "Cập nhật",
+    "relatedPosts": "Bài viết liên quan"
+  },
+  "categories": {
+    "life": "Đời sống",
+    "invest": "Đầu tư",
+    "build": "Xây dựng"
+  },
+  "tags": {
+    "reflect": "Suy ngẫm",
+    "media": "Truyền thông",
+    "roam": "Dịch chuyển",
+    "risk": "Rủi ro",
+    "strategy": "Chiến lược",
+    "allocation": "Phân bổ",
+    "innovation": "Đổi mới",
+    "model": "Mô hình",
+    "management": "Quản trị"
+  },
+  "headings": {
+    "home": {
+      "title": "Trang chủ",
+      "h1": "Sổ Tay AI Locuno",
+      "h2": "Kỹ Năng Sống Cùng AI trong thời đại mới"
+    },
+    "build": {
+      "h1": "Xây dựng",
+      "h2": "Hành trình từ số không đến giá trị đầu tiên, nơi cơ hội và thách thức cùng xuất hiện"
+    },
+    "innovation": {
+      "h1": "Đổi mới",
+      "h2": "Tư duy bứt phá và công nghệ tạo đòn bẩy để thay đổi thế giới"
+    },
+    "model": {
+      "h1": "Mô hình",
+      "h2": "Từ ví dụ thực tế đến xu hướng, tìm logic tăng trưởng có thể lặp lại"
+    },
+    "management": {
+      "h1": "Quản trị",
+      "h2": "Cân bằng chiến lược và thực thi để xây một tổ chức hiệu quả"
+    },
+    "invest": {
+      "h1": "Đầu tư",
+      "h2": "Nghệ thuật nắm bắt giá trị, nơi vốn và ngành cùng định hình kết quả"
+    },
+    "risk": {
+      "h1": "Rủi ro",
+      "h2": "Tìm sự chắc chắn trong bất định và học cách phòng vệ đúng lúc"
+    },
+    "strategy": {
+      "h1": "Chiến lược",
+      "h2": "Đi đường dài với lợi thế tích lũy và hào lũy rõ ràng"
+    },
+    "allocation": {
+      "h1": "Phân bổ",
+      "h2": "Dùng vốn, thời gian và năng lượng theo cách hiệu quả nhất"
+    },
+    "life": {
+      "h1": "Đời sống",
+      "h2": "Vượt ra khỏi hiệu suất để tìm sự cân bằng, sức khỏe và niềm vui"
+    },
+    "reflect": {
+      "h1": "Suy ngẫm",
+      "h2": "Chậm lại để nghĩ sâu hơn về những khả năng phía trước"
+    },
+    "media": {
+      "h1": "Truyền thông",
+      "h2": "Từ đọc đến quan sát, mở rộng cảm hứng và góc nhìn"
+    },
+    "roam": {
+      "h1": "Dịch chuyển",
+      "h2": "Trên đường đi để cảm nhận kết nối chân thật với thế giới"
+    }
+  },
+  "navigation": {
+    "build": "Xây dựng",
+    "invest": "Đầu tư",
+    "life": "Đời sống"
+  },
+  "pages": {
+    "about": { "title": "Giới thiệu" },
+    "author": { "title": "Tác giả", "writingActivity": "Nhịp viết" },
+    "posts": { "title": "Tất cả bài viết" },
+    "categories": {
+      "title": "Chuyên mục",
+      "h2": "Duyệt theo chuyên mục",
+      "description": "Khám phá chủ đề và tìm bài viết theo chuyên mục."
+    },
+    "tags": {
+      "title": "Thẻ",
+      "h2": "Duyệt theo thẻ",
+      "description": "Khám phá chủ đề và tìm bài viết theo thẻ."
+    }
+  },
+  "common": {
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "notFound": "Không tìm thấy",
+    "back": "Quay lại",
+    "next": "Tiếp",
+    "previous": "Trước",
+    "readMore": "Đọc thêm",
+    "pagination": {
+      "totalPosts": "Tổng cộng {count} bài viết",
+      "totalPostsWithLang": "{lang} có tổng cộng {count} bài viết",
+      "pageInfo": "Trang {current} / {total}",
+      "noPosts": "Chưa có bài viết",
+      "noPostsInCategory": "Chuyên mục này chưa có bài viết. Vui lòng quay lại sau."
+    }
+  },
+  "footer": {
+    "copyright": "Bản quyền",
+    "allRightsReserved": "Mọi quyền được bảo lưu",
+    "more": "Thêm",
+    "author": "Tác giả",
+    "categories": "Chuyên mục",
+    "tags": "Thẻ",
+    "privacyPolicy": "Chính sách riêng tư",
+    "termsOfService": "Điều khoản dịch vụ",
+    "contactUs": "Liên hệ"
+  },
+  "homepage": {
+    "featuredPosts": "Bài nổi bật",
+    "topArticles": "Bài đáng đọc",
+    "latestArticles": "Bài mới nhất"
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "message": "Xin lỗi, trang bạn đang tìm không tồn tại hoặc đã bị gỡ.",
+    "backToHome": "Về trang chủ",
+    "browsePosts": "Xem bài viết"
+  },
+  "search": {
+    "title": "Tìm kiếm",
+    "subtitle": "Tìm nội dung bạn quan tâm"
+  },
+  "chat": {
+    "title": "Mở chat"
+  }
+}

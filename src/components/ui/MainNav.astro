@@ -11,7 +11,7 @@ interface Props {
 const { lang, class: className } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (lang as Lang | undefined) ??
-  'zh') as Lang;
+  'en') as Lang;
 ---
 
 <nav class={`hidden lg:flex items-center gap-6 ${className ?? ''}`.trim()}>

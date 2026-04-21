@@ -11,10 +11,10 @@ interface Props {
   lang?: Lang;
 }
 
-const { lang: langProp = 'zh' } = Astro.props as Props;
+const { lang: langProp = 'en' } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (langProp as Lang | undefined) ??
-  'zh') as Lang;
+  'en') as Lang;
 const dir = 'ltr';
 ---
 

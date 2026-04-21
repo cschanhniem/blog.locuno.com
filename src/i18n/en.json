@@ -1,8 +1,8 @@
 {
   "site": {
-    "name": "Polyglow",
-    "titleTemplate": "%s · Polyglow",
-    "description": "Navigating life, entrepreneurship, and the fog of investing",
+    "name": "Locuno AI Handbook",
+    "titleTemplate": "%s · Locuno AI Handbook",
+    "description": "AI, digital skills, and guidance for children",
     "twitter": {
       "site": "@idimilabs",
       "creator": "@Astro"
@@ -44,8 +44,8 @@
   "headings": {
     "home": {
       "title": "Home",
-      "h1": "Polyglow",
-      "h2": "Navigating life, entrepreneurship, and the fog of investing"
+      "h1": "Locuno AI Handbook",
+      "h2": "Skills for Living with AI in a New Era"
     },
     "build": {
       "h1": "Build",
@@ -148,5 +148,8 @@
   "search": {
     "title": "Search",
     "subtitle": "Search for content you're interested in"
+  },
+  "chat": {
+    "title": "Open Chat"
   }
 }

@@ -8,8 +8,8 @@ interface Props {
 const { lang } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as string | undefined) ??
   (lang as string | undefined) ??
-  'zh') as Lang;
-const isCJK = ['zh', 'ja', 'ko'].includes(resolvedLang);
+  'en') as Lang;
+const isCJK = false;
 const containerClass = [
   'prose dark:prose-invert mx-auto',
   isCJK ? 'prose-p:text-justify prose-li:text-justify' : 'prose-p:text-left prose-li:text-left',

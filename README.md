@@ -83,7 +83,7 @@ Polyglow is designed for content sites that need to feel credible, load fast, an
 
 | Area                   | Included                                                                              |
 | ---------------------- | ------------------------------------------------------------------------------------- |
-| Internationalization   | 10 locales: `zh`, `en`, `fr`, `es`, `ru`, `ja`, `ko`, `pt`, `de`, `id`                |
+| Internationalization   | 2 locales: `vi`, `en`                                                                 |
 | Routing behavior       | Default locale prefixing with Astro's built-in i18n routing                           |
 | Content modeling       | Typed collections for posts, pages, and authors                                       |
 | Taxonomy and discovery | Categories, tags, pagination, related posts, latest posts, search                     |
@@ -179,7 +179,7 @@ Add this repository secret before relying on CI deploys:
 
 ## How multilingual support works
 
-Polyglow ships with 10 locales out of the box, with `en` as the default language.
+Polyglow ships with `vi` and `en`, with `en` as the default language.
 
 - Translation dictionaries live in `src/i18n/`
 - Language-aware routes live in `src/pages/[lang]/`

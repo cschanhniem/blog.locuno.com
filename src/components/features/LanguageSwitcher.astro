@@ -1,7 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '@/utils/i18n';
-import { SUPPORTED_LANGS } from '@/utils/i18n';
+import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
 import { t } from '@/utils/translations';
 
 interface Props {
@@ -12,19 +12,11 @@ interface Props {
 const { lang, class: className } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (lang as Lang | undefined) ??
-  'zh') as Lang;
+  DEFAULT_LANG) as Lang;
 
 const FLAG_MAP: Record<Lang, string> = {
-  zh: '🇨🇳',
+  vi: '🇻🇳',
   en: '🇺🇸',
-  fr: '🇫🇷',
-  es: '🇪🇸',
-  ru: '🇷🇺',
-  ja: '🇯🇵',
-  ko: '🇰🇷',
-  pt: '🇵🇹',
-  de: '🇩🇪',
-  id: '🇮🇩',
 };
 const currentFlag = FLAG_MAP[resolvedLang] ?? '🌐';
 const currentPath = Astro.url.pathname;

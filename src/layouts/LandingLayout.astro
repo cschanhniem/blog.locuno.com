@@ -16,7 +16,7 @@ interface Props {
 }
 
 const {
-  lang: langProp = 'zh',
+  lang: langProp = 'en',
   title,
   description,
   keywords,
@@ -28,7 +28,7 @@ const {
 } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (langProp as Lang | undefined) ??
-  'zh') as Lang;
+  'en') as Lang;
 const hasHeaderSlot = Astro.slots.has('header');
 const headerProps = {
   lang: resolvedLang,

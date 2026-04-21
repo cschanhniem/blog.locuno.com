@@ -8,15 +8,7 @@ import { DEFAULT_LANG } from '@/utils/i18n';
 import { t } from './translations';
 
 import 'dayjs/locale/en';
-import 'dayjs/locale/zh-cn';
-import 'dayjs/locale/fr';
-import 'dayjs/locale/es';
-import 'dayjs/locale/ru';
-import 'dayjs/locale/ja';
-import 'dayjs/locale/ko';
-import 'dayjs/locale/pt';
-import 'dayjs/locale/de';
-import 'dayjs/locale/id';
+import 'dayjs/locale/vi';
 
 dayjs.extend(localizedFormat);
 dayjs.extend(relativeTime);
@@ -25,17 +17,9 @@ dayjs.extend(timezone);
 
 export function resolveDayjsLocale(lang: Lang): string {
   switch (lang) {
-    case 'zh':
-      return 'zh-cn';
+    case 'vi':
+      return 'vi';
     case 'en':
-    case 'fr':
-    case 'es':
-    case 'ru':
-    case 'ja':
-    case 'ko':
-    case 'pt':
-    case 'de':
-    case 'id':
       return lang;
     default:
       return 'en';

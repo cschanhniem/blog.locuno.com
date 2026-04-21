@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
-const LANGS = ['zh', 'en', 'fr', 'es', 'ru', 'ja', 'ko', 'pt', 'de', 'id'] as const;
+const LANGS = ['vi', 'en'] as const;
 export const SUPPORTED_LANGS = LANGS;
 export const DEFAULT_LANG = 'en';
 

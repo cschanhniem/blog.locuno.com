@@ -14,7 +14,7 @@ interface Props {
 
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (Astro.props.lang as Lang | undefined) ??
-  'zh') as Lang;
+  'en') as Lang;
 
 const siteName = t(resolvedLang, 'site.name');
 
@@ -24,11 +24,9 @@ const xUrl = twitterHandle ? `https://x.com/${twitterHandle}` : 'https://x.com';
 const githubUrl: string =
   (Astro.props.githubUrl as string | undefined) ?? 'https://github.com/idimilabs';
 
-const rssUrl: string =
-  ((Astro.props.rssUrl as string | undefined) ?? getRelativeLocaleUrl(resolvedLang, '/rss.xml')).replace(
-    /(\.xml)\/$/,
-    '$1',
-  );
+const rssUrl: string = (
+  (Astro.props.rssUrl as string | undefined) ?? getRelativeLocaleUrl(resolvedLang, '/rss.xml')
+).replace(/(\.xml)\/$/, '$1');
 ---
 
 <footer class="header-glass mb-6 w-full">

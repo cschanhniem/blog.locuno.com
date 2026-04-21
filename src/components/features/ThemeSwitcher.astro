@@ -11,7 +11,7 @@ interface Props {
 const { lang, class: className } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (lang as Lang | undefined) ??
-  'zh') as Lang;
+  'en') as Lang;
 const alignmentClass = 'text-left';
 
 const THEME_OPTIONS = [

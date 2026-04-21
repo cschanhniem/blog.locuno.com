@@ -21,7 +21,7 @@ const lang = ((Astro.params.lang as Lang) || DEFAULT_LANG) as Lang;
 const entry = getAuthorForLang(lang) || getAuthorForLang(DEFAULT_LANG as Lang);
 
 const authorName = entry?.data.name || 'Author';
-const pageTitle = t(lang, 'pages.author.title') || (lang === 'zh' ? '作者' : 'Author');
+const pageTitle = t(lang, 'pages.author.title') || (lang === 'vi' ? 'Tác giả' : 'Author');
 const description = entry?.data.bio || '';
 const socials: Array<{ label: string; url: string }> = (entry?.data.socials || []) as any;
 const avatar = entry?.data.avatar || (fallbackAvatar as any);
