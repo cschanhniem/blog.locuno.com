@@ -1,6 +1,7 @@
 ---
 import Header from '@/ui/Header.astro';
 import Footer from '@/ui/Footer.astro';
+import LanguageDetector from '@/analytics/LanguageDetector.astro';
 import GTMHead from '@/analytics/GTMHead.astro';
 import DynamicGlass from '@/features/DynamicGlass.astro';
 import type { Lang } from '@/utils/i18n';
@@ -26,10 +27,12 @@ const dir = 'ltr';
 
     <slot name="head" />
     <GTMHead />
+    <LanguageDetector />
+
     <ClientRouter />
     <script src="../utils/image-fade-in.ts"></script>
   </head>
-  <body class="bg-white text-gray-950 dark:bg-gray-950 dark:text-gray-100">
+  <body class="site-shell">
     <div class="flex min-h-dvh flex-col">
       <Header lang={resolvedLang} />
       <slot name="hero" />

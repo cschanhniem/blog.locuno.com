@@ -19,13 +19,13 @@
   (function initDynamicGlass() {
     const CONFIG = {
       sampleSize: 10,
-      colorMultiplier: 0.7, // Color intensity multiplier (increase for richer colors)
-      baseOpacity: 0.35, // Base opacity (decrease for more transparent glass)
+      colorMultiplier: 0.5, // Keep image tint restrained so surfaces stay editorial
+      baseOpacity: 0.14, // Accent tint only, not full-color glass
       brightnessThreshold: {
         min: 30,
         max: 220,
       },
-      blurAmount: '20px', // Blur amount (increase to enhance frosted glass effect)
+      blurAmount: '18px', // Preserve softness without turning the panel into fog
       debounceMs: 100, // Debounce delay
     };
 
@@ -86,7 +86,7 @@
         const avgBrightness = totalBrightness / (count / 2);
         const adaptiveOpacity =
           avgBrightness < 100
-            ? CONFIG.baseOpacity + 0.1 // Dark images use higher opacity
+            ? CONFIG.baseOpacity + 0.05 // Dark images use slightly higher opacity
             : CONFIG.baseOpacity;
 
         r = Math.round((r / count) * CONFIG.colorMultiplier);
@@ -117,7 +117,7 @@
       const apply = () => {
         const color = extractDominantColor(img);
         if (color) {
-          content.style.backgroundColor = color;
+          content.style.setProperty('--glass-accent', color);
           content.style.backdropFilter = `blur(${CONFIG.blurAmount})`;
           content.style.webkitBackdropFilter = `blur(${CONFIG.blurAmount})`;
         }

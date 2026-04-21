@@ -183,27 +183,11 @@
 
 /* ========================================
    Category Tag Colors (data-attribute selectors required)
-   Using Tailwind color palette where possible
+   Unified premium accent treatment
    ======================================== */
 
 .category-tag {
   @apply inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase transition-opacity duration-150 hover:opacity-90;
-}
-
-.category-tag[data-category='education'] {
-  @apply bg-gradient-to-br from-indigo-500 to-violet-500;
-}
-
-.category-tag[data-category='skills'] {
-  @apply bg-gradient-to-br from-emerald-500 to-teal-500;
-}
-
-.category-tag[data-category='safety'] {
-  @apply bg-gradient-to-br from-rose-500 to-orange-500;
-}
-
-.category-tag:not([data-category]) {
-  @apply bg-gradient-to-br from-slate-500 to-slate-600;
 }
 
 /* ========================================
@@ -308,6 +292,30 @@ summary:focus-visible {
   background: linear-gradient(180deg, rgba(29, 29, 29, 0.92) 0%, rgba(20, 20, 20, 0.88) 100%);
   border-bottom: 1px solid var(--cloud-line);
   box-shadow: var(--surface-shadow-dark);
+}
+
+
+/* ========================================
+   Footer Glass
+   ======================================== */
+
+.footer-glass {
+  @apply relative z-50;
+  background: linear-gradient(180deg, rgba(246, 241, 232, 0.94) 0%, rgba(239, 229, 216, 0.88) 100%);
+  backdrop-filter: blur(var(--glass-blur-lg));
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg));
+  border-top: 1px solid var(--ink-line);
+  box-shadow: 0 -20px 60px rgba(20, 20, 20, 0.04);
+}
+
+:root:not(.dark) .footer-glass {
+  background: linear-gradient(180deg, rgba(246, 241, 232, 0.96) 0%, rgba(239, 229, 216, 0.92) 100%);
+}
+
+:root:where(.dark, .dark *) .footer-glass {
+  background: linear-gradient(180deg, rgba(29, 29, 29, 0.92) 0%, rgba(20, 20, 20, 0.88) 100%);
+  border-top: 1px solid var(--cloud-line);
+  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.24);
 }
 
 /* ========================================
