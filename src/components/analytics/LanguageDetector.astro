@@ -1,0 +1,19 @@
+---
+// Lightweight client-side language detection.
+// Fires only on the root route "/" during initial visit.
+---
+<script is:inline>
+  (function() {
+    try {
+      if (window.location.pathname !== '/') return;
+      if (sessionStorage.getItem('lang-redirected') === 'true') return;
+      
+      var navLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+      var isVietnamese = navLang.indexOf('vi') === 0;
+      var target = isVietnamese ? '/vi/' : '/en/';
+      
+      sessionStorage.setItem('lang-redirected', 'true');
+      window.location.replace(target + window.location.search + window.location.hash);
+    } catch (e) {}
+  })();
+</script>
