@@ -4,18 +4,15 @@ import { SUPPORTED_LANGS } from '@/utils/i18n';
 import { categorySlug, tagSlug } from '@/utils/translations';
 
 export type PostEntry = CollectionEntry<'post'>;
-export const CATEGORY_KEYS = ['build', 'invest', 'life'] as const;
+export const CATEGORY_KEYS = ['education', 'skills', 'safety'] as const;
 export type CategoryKey = (typeof CATEGORY_KEYS)[number];
 export const TAG_KEYS = [
-  'reflect',
-  'media',
-  'roam',
-  'risk',
-  'strategy',
-  'allocation',
-  'innovation',
-  'model',
-  'management',
+  'ai-literacy',
+  'parenting',
+  'future-ready',
+  'protection',
+  'wellbeing',
+  'tools',
 ] as const;
 export type TagKey = (typeof TAG_KEYS)[number];
 

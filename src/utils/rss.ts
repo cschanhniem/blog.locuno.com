@@ -17,7 +17,7 @@ function toItem(entry: PostEntry) {
 export async function generateRssForLang(lang: Lang, site: URL) {
   const items = getPostsForLang(lang).slice(0, 5).map(toItem);
 
-  const title = `Polyglow · ${lang.toUpperCase()}`;
+  const title = `${t(lang, 'site.name')} · ${lang.toUpperCase()}`;
   const description = t(lang, 'site.description');
 
   return rss({

@@ -12,15 +12,12 @@ export const prerender = true;
 
 export async function getStaticPaths() {
   const TAG_KEYS = [
-    'reflect',
-    'media',
-    'roam',
-    'risk',
-    'strategy',
-    'allocation',
-    'innovation',
-    'model',
-    'management',
+    'ai-literacy',
+    'parenting',
+    'future-ready',
+    'protection',
+    'wellbeing',
+    'tools',
   ] as const;
   return SUPPORTED_LANGS.flatMap((lang) => TAG_KEYS.map((slug) => ({ params: { lang, slug } })));
 }

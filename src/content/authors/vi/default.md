@@ -1,13 +1,12 @@
 ---
-name: "Astro"
-bio: "Đi qua đời sống, khởi nghiệp và làn sương mù của đầu tư."
+name: "Đội ngũ Locuno"
+bio: "Viết về AI, kỹ năng số và những quyết định quan trọng khi đồng hành cùng trẻ."
 socials:
-  - { label: "X", url: "https://x.com/idimilabs" }
-  - { label: "GitHub", url: "https://github.com/idimilabs" }
-  - { label: "Website", url: "https://inote.xyz" }
-  - { label: "RSS", url: "https://inote.xyz/vi/rss.xml" }
+  - { label: "Website", url: "https://www.locuno.com/academy" }
+  - { label: "Programs", url: "https://www.locuno.com/academy/programs" }
+  - { label: "Assessment", url: "https://www.locuno.com/academy/assessment" }
 locales: vi
 draft: false
 ---
 
-Đây là phần giới thiệu tác giả bằng tiếng Việt. Có thể mở rộng thêm chi tiết khi cần.
+Chúng tôi là nhóm biên soạn đứng sau Locuno Academy. Những bài viết ở đây được xây để giúp phụ huynh và người học nhìn AI bằng con mắt tỉnh táo hơn: thấy cơ hội, thấy rủi ro, và quan trọng nhất là biết nên bắt đầu từ đâu.

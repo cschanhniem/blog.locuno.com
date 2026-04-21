@@ -14,15 +14,12 @@ export async function getStaticPaths() {
 const lang = ((Astro.params.lang as Lang) || DEFAULT_LANG) as Lang;
 
 const TAG_KEYS = [
-  'reflect',
-  'media',
-  'roam',
-  'risk',
-  'strategy',
-  'allocation',
-  'innovation',
-  'model',
-  'management',
+  'ai-literacy',
+  'parenting',
+  'future-ready',
+  'protection',
+  'wellbeing',
+  'tools',
 ] as const;
 
 function countFor(key: (typeof TAG_KEYS)[number]) {

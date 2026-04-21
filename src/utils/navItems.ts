@@ -1,7 +1,7 @@
-export type NavKey = 'build' | 'invest' | 'life';
+export type NavKey = 'education' | 'skills' | 'safety';
 
 export const NAV_ITEMS: Array<{ key: NavKey; tags: string[] }> = [
-  { key: 'build', tags: ['innovation', 'model', 'management'] },
-  { key: 'invest', tags: ['risk', 'strategy', 'allocation'] },
-  { key: 'life', tags: ['reflect', 'media', 'roam'] },
+  { key: 'education', tags: ['ai-literacy', 'future-ready'] },
+  { key: 'skills', tags: ['tools', 'future-ready'] },
+  { key: 'safety', tags: ['parenting', 'protection', 'wellbeing'] },
 ];

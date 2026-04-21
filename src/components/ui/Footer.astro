@@ -4,11 +4,10 @@ import { t } from '@/utils/translations';
 import FooterNav from '@/ui/FooterNav.astro';
 import { Icon } from 'astro-icon/components';
 import { getRelativeLocaleUrl } from 'astro:i18n';
-import Github from '@/assets/github.svg';
 
 interface Props {
   lang?: Lang;
-  githubUrl?: string;
+  websiteUrl?: string;
   rssUrl?: string;
 }
 
@@ -21,8 +20,8 @@ const siteName = t(resolvedLang, 'site.name');
 const twitterHandleRaw = t(resolvedLang, 'site.twitter.site') || '';
 const twitterHandle = String(twitterHandleRaw).replace(/^@/, '');
 const xUrl = twitterHandle ? `https://x.com/${twitterHandle}` : 'https://x.com';
-const githubUrl: string =
-  (Astro.props.githubUrl as string | undefined) ?? 'https://github.com/idimilabs';
+const websiteUrl: string =
+  (Astro.props.websiteUrl as string | undefined) ?? 'https://www.locuno.com/academy';
 
 const rssUrl: string = (
   (Astro.props.rssUrl as string | undefined) ?? getRelativeLocaleUrl(resolvedLang, '/rss.xml')
@@ -53,13 +52,13 @@ const rssUrl: string = (
               <span class="sr-only">X</span>
             </a>
             <a
-              href={githubUrl}
+              href={websiteUrl}
               target="_blank"
               rel="noopener noreferrer"
               class="inline-flex items-center gap-1 rounded-md p-2 text-gray-600 transition-all hover:bg-black/5 hover:text-gray-950 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
             >
-              <span aria-hidden="true"><Github class="h-5 w-5" /></span>
-              <span class="sr-only">GitHub</span>
+              <span aria-hidden="true"><Icon name="lucide:globe" class="h-5 w-5" /></span>
+              <span class="sr-only">Website</span>
             </a>
             <a
               href={rssUrl}

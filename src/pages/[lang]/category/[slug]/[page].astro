@@ -13,7 +13,7 @@ import type { GetStaticPaths } from 'astro';
 export const prerender = true;
 
 export const getStaticPaths: GetStaticPaths = async ({ paginate }) => {
-  const CATEGORY_KEYS = ['build', 'invest', 'life'] as const;
+  const CATEGORY_KEYS = ['education', 'skills', 'safety'] as const;
 
   const byLangAndCategory = SUPPORTED_LANGS.flatMap((lang) =>
     CATEGORY_KEYS.flatMap((key) =>

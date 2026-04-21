@@ -5,7 +5,7 @@
     "description": "AI, digital skills, and guidance for children",
     "twitter": {
       "site": "@idimilabs",
-      "creator": "@Astro"
+      "creator": "@idimilabs"
     }
   },
   "language": {
@@ -26,20 +26,17 @@
     "relatedPosts": "Related Posts"
   },
   "categories": {
-    "life": "Life",
-    "invest": "Invest",
-    "build": "Build"
+    "education": "Education",
+    "skills": "Digital Skills",
+    "safety": "Safety"
   },
   "tags": {
-    "reflect": "Reflect",
-    "media": "Media",
-    "roam": "Roam",
-    "risk": "Risk",
-    "strategy": "Strategy",
-    "allocation": "Allocation",
-    "innovation": "Innovation",
-    "model": "Model",
-    "management": "Management"
+    "ai-literacy": "AI Literacy",
+    "parenting": "Parenting",
+    "future-ready": "Future Ready",
+    "protection": "Protection",
+    "wellbeing": "Wellbeing",
+    "tools": "Tools"
   },
   "headings": {
     "home": {
@@ -47,64 +44,68 @@
       "h1": "Locuno AI Handbook",
       "h2": "Skills for Living with AI in a New Era"
     },
-    "build": {
-      "h1": "Build",
-      "h2": "The path from zero to one, spotting opportunities and challenges"
+    "education": {
+      "h1": "Education",
+      "h2": "Shaping mindsets and learning approaches alongside AI"
     },
-    "innovation": {
-      "h1": "Innovation",
-      "h2": "Technology-driven and breakthrough thinking, seeking the power to change the world"
+    "skills": {
+      "h1": "Digital Skills",
+      "h2": "Equipping the capabilities needed to master technology"
     },
-    "model": { "h1": "Model", "h2": "From cases to trends, exploring repeatable growth logic" },
-    "management": {
-      "h1": "Management",
-      "h2": "Balancing strategy and execution to build an efficient organization and team culture"
+    "safety": {
+      "h1": "Safety",
+      "h2": "Setting boundaries and protecting children online"
     },
-    "invest": {
-      "h1": "Invest",
-      "h2": "The art of capturing value, the dual logic of capital and industry"
+    "ai-literacy": {
+      "h1": "AI Literacy",
+      "h2": "Building a grounded understanding of artificial intelligence"
     },
-    "risk": {
-      "h1": "Risk",
-      "h2": "Certainty within uncertainty: how to identify and hedge effectively"
+    "parenting": {
+      "h1": "Parenting",
+      "h2": "Guiding children through the digital era"
     },
-    "strategy": {
-      "h1": "Strategy",
-      "h2": "Moving forward in the game, building long-term advantages and moats"
+    "future-ready": {
+      "h1": "Future Ready",
+      "h2": "Preparing the next generation for what comes next"
     },
-    "allocation": {
-      "h1": "Allocation",
-      "h2": "The optimal use of resources: balancing capital, time, and energy"
+    "protection": {
+      "h1": "Protection",
+      "h2": "Defending against online risks"
     },
-    "life": {
-      "h1": "Life",
-      "h2": "Beyond efficiency and output: pursuing balance, health, and happiness"
+    "wellbeing": {
+      "h1": "Wellbeing",
+      "h2": "Balancing the virtual world with real connection"
     },
-    "reflect": { "h1": "Reflect", "h2": "Slow down and think deeply about future possibilities" },
-    "media": {
-      "h1": "Media",
-      "h2": "From reading to observing, gaining cross-boundary inspiration and insight"
-    },
-    "roam": { "h1": "Roam", "h2": "On the road, feeling a genuine connection with the world" }
+    "tools": {
+      "h1": "Tools",
+      "h2": "Applying technology solutions effectively and safely"
+    }
   },
   "navigation": {
-    "build": "Build",
-    "invest": "Invest",
-    "life": "Life"
+    "education": "Education",
+    "skills": "Digital Skills",
+    "safety": "Safety"
   },
   "pages": {
-    "about": { "title": "About" },
-    "author": { "title": "Author", "writingActivity": "Writing Activity" },
-    "posts": { "title": "All Posts" },
+    "about": {
+      "title": "About"
+    },
+    "author": {
+      "title": "Editorial Team",
+      "writingActivity": "Editorial Activity"
+    },
+    "posts": {
+      "title": "All Posts"
+    },
     "categories": {
       "title": "Categories",
       "h2": "Browse Categories",
-      "description": "Explore topics and find articles by category."
+      "description": "Three editorial tracks for families and learners growing up with AI."
     },
     "tags": {
       "title": "Tags",
       "h2": "Browse Tags",
-      "description": "Explore topics and find articles by tags."
+      "description": "Core themes around AI, digital capability, and child safety."
     }
   },
   "common": {
@@ -135,9 +136,9 @@
     "contactUs": "Contact Us"
   },
   "homepage": {
-    "featuredPosts": "Featured Posts",
-    "topArticles": "Top Articles",
-    "latestArticles": "Latest Articles"
+    "featuredPosts": "Start Here",
+    "topArticles": "Read Next",
+    "latestArticles": "Latest Notes"
   },
   "notFound": {
     "title": "Page Not Found",
@@ -147,7 +148,7 @@
   },
   "search": {
     "title": "Search",
-    "subtitle": "Search for content you're interested in"
+    "subtitle": "Find articles on AI, digital skills, and guidance for children"
   },
   "chat": {
     "title": "Open Chat"

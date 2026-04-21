@@ -15,7 +15,7 @@ const post = defineCollection({
     tags: z.array(z.string()).default([]),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    author: z.string().default('Astro'),
+    author: z.string().default('Locuno Team'),
     heroImage: z.url(),
     heroImageAlt: z.string(),
     locales: z.enum(LANGS),

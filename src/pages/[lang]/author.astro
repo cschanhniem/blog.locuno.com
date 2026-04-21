@@ -131,11 +131,7 @@ const years = [currentYear, currentYear - 1, currentYear - 2];
                   <div class="relative">
                     {years.map((year) => (
                       <div data-calendar-year={year} class={year === currentYear ? '' : 'hidden'}>
-                        <GitHubActivityCalendar
-                          username="idimilabs"
-                          repo="idimilabs/Polyglow"
-                          year={year}
-                        />
+                        <GitHubActivityCalendar username="idimilabs" year={year} />
                       </div>
                     ))}
                   </div>

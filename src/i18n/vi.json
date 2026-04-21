@@ -5,7 +5,7 @@
     "description": "AI, kỹ năng số và định hướng cho trẻ",
     "twitter": {
       "site": "@idimilabs",
-      "creator": "@Astro"
+      "creator": "@idimilabs"
     }
   },
   "language": {
@@ -26,20 +26,17 @@
     "relatedPosts": "Bài viết liên quan"
   },
   "categories": {
-    "life": "Đời sống",
-    "invest": "Đầu tư",
-    "build": "Xây dựng"
+    "education": "Giáo dục",
+    "skills": "Kỹ năng số",
+    "safety": "An toàn"
   },
   "tags": {
-    "reflect": "Suy ngẫm",
-    "media": "Truyền thông",
-    "roam": "Dịch chuyển",
-    "risk": "Rủi ro",
-    "strategy": "Chiến lược",
-    "allocation": "Phân bổ",
-    "innovation": "Đổi mới",
-    "model": "Mô hình",
-    "management": "Quản trị"
+    "ai-literacy": "Hiểu biết AI",
+    "parenting": "Đồng hành",
+    "future-ready": "Sẵn sàng tương lai",
+    "protection": "Bảo vệ",
+    "wellbeing": "Sức khoẻ tinh thần",
+    "tools": "Công cụ"
   },
   "headings": {
     "home": {
@@ -47,73 +44,68 @@
       "h1": "Sổ Tay AI Locuno",
       "h2": "Kỹ Năng Sống Cùng AI trong thời đại mới"
     },
-    "build": {
-      "h1": "Xây dựng",
-      "h2": "Hành trình từ số không đến giá trị đầu tiên, nơi cơ hội và thách thức cùng xuất hiện"
+    "education": {
+      "h1": "Giáo dục",
+      "h2": "Định hình tư duy và phương pháp học tập cùng AI"
     },
-    "innovation": {
-      "h1": "Đổi mới",
-      "h2": "Tư duy bứt phá và công nghệ tạo đòn bẩy để thay đổi thế giới"
+    "skills": {
+      "h1": "Kỹ năng số",
+      "h2": "Trang bị những năng lực cần thiết để làm chủ công nghệ"
     },
-    "model": {
-      "h1": "Mô hình",
-      "h2": "Từ ví dụ thực tế đến xu hướng, tìm logic tăng trưởng có thể lặp lại"
+    "safety": {
+      "h1": "An toàn",
+      "h2": "Thiết lập ranh giới và bảo vệ trẻ trên môi trường mạng"
     },
-    "management": {
-      "h1": "Quản trị",
-      "h2": "Cân bằng chiến lược và thực thi để xây một tổ chức hiệu quả"
+    "ai-literacy": {
+      "h1": "Hiểu biết AI",
+      "h2": "Xây dựng nhận thức đúng đắn về công nghệ trí tuệ nhân tạo"
     },
-    "invest": {
-      "h1": "Đầu tư",
-      "h2": "Nghệ thuật nắm bắt giá trị, nơi vốn và ngành cùng định hình kết quả"
+    "parenting": {
+      "h1": "Đồng hành",
+      "h2": "Sát cánh cùng con trong kỷ nguyên số"
     },
-    "risk": {
-      "h1": "Rủi ro",
-      "h2": "Tìm sự chắc chắn trong bất định và học cách phòng vệ đúng lúc"
+    "future-ready": {
+      "h1": "Sẵn sàng tương lai",
+      "h2": "Chuẩn bị hành trang cho thế hệ kế tiếp"
     },
-    "strategy": {
-      "h1": "Chiến lược",
-      "h2": "Đi đường dài với lợi thế tích lũy và hào lũy rõ ràng"
+    "protection": {
+      "h1": "Bảo vệ",
+      "h2": "Phòng vệ trước những rủi ro trực tuyến"
     },
-    "allocation": {
-      "h1": "Phân bổ",
-      "h2": "Dùng vốn, thời gian và năng lượng theo cách hiệu quả nhất"
+    "wellbeing": {
+      "h1": "Sức khoẻ tinh thần",
+      "h2": "Cân bằng giữa thế giới ảo và kết nối thực"
     },
-    "life": {
-      "h1": "Đời sống",
-      "h2": "Vượt ra khỏi hiệu suất để tìm sự cân bằng, sức khỏe và niềm vui"
-    },
-    "reflect": {
-      "h1": "Suy ngẫm",
-      "h2": "Chậm lại để nghĩ sâu hơn về những khả năng phía trước"
-    },
-    "media": {
-      "h1": "Truyền thông",
-      "h2": "Từ đọc đến quan sát, mở rộng cảm hứng và góc nhìn"
-    },
-    "roam": {
-      "h1": "Dịch chuyển",
-      "h2": "Trên đường đi để cảm nhận kết nối chân thật với thế giới"
+    "tools": {
+      "h1": "Công cụ",
+      "h2": "Ứng dụng giải pháp công nghệ hiệu quả và an toàn"
     }
   },
   "navigation": {
-    "build": "Xây dựng",
-    "invest": "Đầu tư",
-    "life": "Đời sống"
+    "education": "Giáo dục",
+    "skills": "Kỹ năng số",
+    "safety": "An toàn"
   },
   "pages": {
-    "about": { "title": "Giới thiệu" },
-    "author": { "title": "Tác giả", "writingActivity": "Nhịp viết" },
-    "posts": { "title": "Tất cả bài viết" },
+    "about": {
+      "title": "Giới thiệu"
+    },
+    "author": {
+      "title": "Ban biên soạn",
+      "writingActivity": "Nhịp cập nhật"
+    },
+    "posts": {
+      "title": "Tất cả bài viết"
+    },
     "categories": {
       "title": "Chuyên mục",
       "h2": "Duyệt theo chuyên mục",
-      "description": "Khám phá chủ đề và tìm bài viết theo chuyên mục."
+      "description": "Ba tuyến nội dung cốt lõi giúp phụ huynh và người học định hướng cùng AI."
     },
     "tags": {
       "title": "Thẻ",
       "h2": "Duyệt theo thẻ",
-      "description": "Khám phá chủ đề và tìm bài viết theo thẻ."
+      "description": "Các từ khoá trọng tâm xoay quanh AI, kỹ năng số và an toàn cho trẻ."
     }
   },
   "common": {
@@ -144,9 +136,9 @@
     "contactUs": "Liên hệ"
   },
   "homepage": {
-    "featuredPosts": "Bài nổi bật",
-    "topArticles": "Bài đáng đọc",
-    "latestArticles": "Bài mới nhất"
+    "featuredPosts": "Bắt đầu từ đây",
+    "topArticles": "Đọc tiếp",
+    "latestArticles": "Mới cập nhật"
   },
   "notFound": {
     "title": "Không tìm thấy trang",
@@ -156,7 +148,7 @@
   },
   "search": {
     "title": "Tìm kiếm",
-    "subtitle": "Tìm nội dung bạn quan tâm"
+    "subtitle": "Tìm bài viết về AI, kỹ năng số và định hướng cho trẻ"
   },
   "chat": {
     "title": "Mở chat"
