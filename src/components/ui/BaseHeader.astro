@@ -1,7 +1,7 @@
 ---
 import type { Lang } from '@/utils/i18n';
 import { SUPPORTED_LANGS, DEFAULT_LANG, stripLocalePrefix } from '@/utils/i18n';
-import { t } from '@/utils/translations';
+import { t, tOptional } from '@/utils/translations';
 import { SEO } from 'astro-seo';
 import { getAbsoluteLocaleUrl, getRelativeLocaleUrl } from 'astro:i18n';
 
@@ -47,6 +47,8 @@ const siteName = t(resolvedLang, 'site.name');
 const titleTemplate = t(resolvedLang, 'site.titleTemplate');
 const titleDefault = siteName;
 const metaDescription = description ?? t(resolvedLang, 'site.description');
+const twitterSite = tOptional(resolvedLang, 'site.twitter.site');
+const twitterCreator = tOptional(resolvedLang, 'site.twitter.creator');
 const keywordsStr = Array.isArray(keywords) ? keywords.join(', ') : keywords;
 
 const rssPath = getRelativeLocaleUrl(resolvedLang, '/rss.xml').replace(/(\.xml)\/$/, '$1');
@@ -83,7 +85,9 @@ const languageTagMap: Record<Lang, string> = {
 };
 const languageTag = languageTagMap[resolvedLang] ?? resolvedLang;
 const ogLocale = ogLocaleMap[resolvedLang] ?? 'en_US';
-const ogAlternateLocales = SUPPORTED_LANGS.filter((l) => l !== resolvedLang).map((l) => ogLocaleMap[l]);
+const ogAlternateLocales = SUPPORTED_LANGS.filter((l) => l !== resolvedLang).map(
+  (l) => ogLocaleMap[l],
+);
 
 const localeAgnosticPath = stripLocalePrefix(Astro.url.pathname);
 const languageAlternates = SUPPORTED_LANGS.map((l) => ({
@@ -145,8 +149,8 @@ const seoProps: any = {
   },
   twitter: {
     card: absImage ? 'summary_large_image' : 'summary',
-    site: t(resolvedLang, 'site.twitter.site'),
-    creator: t(resolvedLang, 'site.twitter.creator'),
+    ...(twitterSite ? { site: twitterSite } : {}),
+    ...(twitterCreator ? { creator: twitterCreator } : {}),
     title: title || siteName,
     description: metaDescription,
     image: absImage,

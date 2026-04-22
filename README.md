@@ -151,12 +151,14 @@ It runs on every push to `main` and on manual dispatch. The workflow:
 Add this repository secret before relying on CI deploys:
 
 - `CLOUDFLARE_API_TOKEN`: a Cloudflare API token with `Workers Scripts:Edit` access for the account that owns the deployment
+- `CLOUDFLARE_ACCOUNT_ID`: the Cloudflare account ID for the target deployment
 
 ### First-time setup checklist
 
 1. Create the `CLOUDFLARE_API_TOKEN` secret in GitHub repository settings.
-2. Ensure the Cloudflare account has a Workers subdomain enabled.
-3. If you want `https://blog.locuno.com` instead of the default `workers.dev` URL, attach the custom domain in Cloudflare after the first deploy.
+2. Create the `CLOUDFLARE_ACCOUNT_ID` secret in GitHub repository settings.
+3. Ensure the Cloudflare account has a Workers subdomain enabled.
+4. If you want a custom domain instead of the default `workers.dev` URL, attach it in Cloudflare after the first deploy.
 
 ## Project Structure
 
@@ -223,14 +225,24 @@ featured: true
 - Update site-level metadata and integrations in `astro.config.mjs`
 - Replace the logo and social assets in `src/assets/` and `public/`
 - Adjust navigation, footer, and layout components under `src/components/ui/`
+- Set optional external links in `src/i18n/en.json` and `src/i18n/vi.json` under `site.links`
 
 ### Analytics
+
+Analytics is disabled by default. To enable GA4, copy `.env.example` to `.env` and set:
+
+```env
+PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
 
 Partytown is already set up for performance-friendly analytics loading. If you use GTM or another analytics provider, start with the files in `src/components/analytics/`.
 
 ### GitHub activity widget
 
-The author page can display GitHub activity when `GITHUB_TOKEN` is available.
+The author page can display GitHub activity when both of these are true:
+
+- the author has a GitHub profile in `src/content/authors/*/default.md`
+- `GITHUB_TOKEN` is available
 
 ```env
 GITHUB_TOKEN=your_personal_access_token

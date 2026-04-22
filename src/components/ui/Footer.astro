@@ -1,12 +1,13 @@
 ---
 import type { Lang } from '@/utils/i18n';
-import { t } from '@/utils/translations';
+import { t, tOptional } from '@/utils/translations';
 import FooterNav from '@/ui/FooterNav.astro';
 import { Icon } from 'astro-icon/components';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 
 interface Props {
   lang?: Lang;
+  twitterHandle?: string;
   websiteUrl?: string;
   facebookUrl?: string;
   youtubeUrl?: string;
@@ -18,15 +19,24 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
 
 const siteName = t(resolvedLang, 'site.name');
 
-const twitterHandleRaw = t(resolvedLang, 'site.twitter.site') || '';
-const twitterHandle = String(twitterHandleRaw).replace(/^@/, '');
-const xUrl = twitterHandle ? `https://x.com/${twitterHandle}` : 'https://x.com';
-const websiteUrl: string =
-  (Astro.props.websiteUrl as string | undefined) ?? 'https://www.locuno.com/academy';
-const facebookUrl: string =
-  (Astro.props.facebookUrl as string | undefined) ?? 'http://facebook.com/safelocuno';
-const youtubeUrl: string =
-  (Astro.props.youtubeUrl as string | undefined) ?? 'https://www.youtube.com/@safelocuno';
+const twitterHandleRaw =
+  (Astro.props.twitterHandle as string | undefined) ?? tOptional(resolvedLang, 'site.twitter.site');
+const twitterHandle = String(twitterHandleRaw || '').replace(/^@/, '');
+const websiteUrl =
+  (Astro.props.websiteUrl as string | undefined) ?? tOptional(resolvedLang, 'site.links.website');
+const facebookUrl =
+  (Astro.props.facebookUrl as string | undefined) ?? tOptional(resolvedLang, 'site.links.facebook');
+const youtubeUrl =
+  (Astro.props.youtubeUrl as string | undefined) ?? tOptional(resolvedLang, 'site.links.youtube');
+
+const socialLinks = [
+  twitterHandle
+    ? { href: `https://x.com/${twitterHandle}`, label: 'X', icon: 'lucide:x' }
+    : undefined,
+  websiteUrl ? { href: websiteUrl, label: 'Website', icon: 'lucide:globe' } : undefined,
+  facebookUrl ? { href: facebookUrl, label: 'Facebook', icon: 'lucide:globe' } : undefined,
+  youtubeUrl ? { href: youtubeUrl, label: 'YouTube', icon: 'lucide:globe' } : undefined,
+].filter(Boolean) as Array<{ href: string; label: string; icon: string }>;
 ---
 
 <footer class="footer-glass mb-6 w-full">
@@ -42,44 +52,25 @@ const youtubeUrl: string =
               {siteName}
             </span>
           </a>
-          <div class="mt-4 flex items-center gap-4 text-sm">
-            <a
-              href={xUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 rounded-md p-2 text-gray-600 transition-all hover:bg-black/5 hover:text-gray-950 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
-            >
-              <span aria-hidden="true"><Icon name="lucide:x" class="h-5 w-5" /></span>
-              <span class="sr-only">X</span>
-            </a>
-            <a
-              href={websiteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 rounded-md p-2 text-gray-600 transition-all hover:bg-black/5 hover:text-gray-950 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
-            >
-              <span aria-hidden="true"><Icon name="lucide:globe" class="h-5 w-5" /></span>
-              <span class="sr-only">Website</span>
-            </a>
-            <a
-              href={facebookUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 rounded-md p-2 text-gray-600 transition-all hover:bg-black/5 hover:text-gray-950 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
-            >
-              <span aria-hidden="true"><Icon name="lucide:globe" class="h-5 w-5" /></span>
-              <span class="sr-only">Facebook</span>
-            </a>
-            <a
-              href={youtubeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-1 rounded-md p-2 text-gray-600 transition-all hover:bg-black/5 hover:text-gray-950 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
-            >
-              <span aria-hidden="true"><Icon name="lucide:globe" class="h-5 w-5" /></span>
-              <span class="sr-only">YouTube</span>
-            </a>
-          </div>
+          {
+            socialLinks.length > 0 && (
+              <div class="mt-4 flex items-center gap-4 text-sm">
+                {socialLinks.map((link) => (
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1 rounded-md p-2 text-gray-600 transition-all hover:bg-black/5 hover:text-gray-950 dark:text-gray-400 dark:hover:bg-white/10 dark:hover:text-white"
+                  >
+                    <span aria-hidden="true">
+                      <Icon name={link.icon} class="h-5 w-5" />
+                    </span>
+                    <span class="sr-only">{link.label}</span>
+                  </a>
+                ))}
+              </div>
+            )
+          }
         </div>
 
         {/* Desktop/Tablet: Copyright below social icons - pushed to bottom */}

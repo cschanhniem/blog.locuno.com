@@ -1,6 +1,6 @@
 ---
 import type { Lang } from '@/utils/i18n';
-import { t } from '@/utils/translations';
+import { t, tOptional } from '@/utils/translations';
 import LanguageSwitcher from '@/features/LanguageSwitcher.astro';
 import ThemeSwitcher from '@/features/ThemeSwitcher.astro';
 import MainNav from '@/ui/MainNav.astro';
@@ -13,6 +13,7 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   'en') as Lang;
 
 const siteName = t(resolvedLang, 'site.name');
+const chatUrl = tOptional(resolvedLang, 'site.links.chat');
 ---
 
 <header class="header-glass w-full">
@@ -40,16 +41,20 @@ const siteName = t(resolvedLang, 'site.name');
       </div>
 
       <div class="flex items-center gap-2 justify-self-end">
-        <a
-          href="https://chat.idimi.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={t(resolvedLang, 'chat.title')}
-          title={t(resolvedLang, 'chat.title')}
-          class="rounded-md p-2 text-gray-600 transition-colors hover:bg-black/5 hover:text-gray-950 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white"
-        >
-          <Icon name="lucide:search" />
-        </a>
+        {
+          chatUrl && (
+            <a
+              href={chatUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t(resolvedLang, 'chat.title')}
+              title={t(resolvedLang, 'chat.title')}
+              class="rounded-md p-2 text-gray-600 transition-colors hover:bg-black/5 hover:text-gray-950 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              <Icon name="lucide:search" />
+            </a>
+          )
+        }
 
         <LanguageSwitcher lang={resolvedLang} />
 

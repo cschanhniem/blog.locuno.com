@@ -56,6 +56,19 @@ export function t(lang: Lang, key: string, vars?: Record<string, string | number
   return typeof fv === 'string' ? format(fv, vars) : key;
 }
 
+export function tOptional(
+  lang: Lang,
+  key: string,
+  vars?: Record<string, string | number>,
+): string | undefined {
+  const dict = getTranslations(lang);
+  const v = get(dict, key);
+  if (typeof v === 'string') return format(v, vars);
+  const fallback = getTranslations(DEFAULT_LANG);
+  const fv = get(fallback, key);
+  return typeof fv === 'string' ? format(fv, vars) : undefined;
+}
+
 export type Translations = ReturnType<typeof getTranslations>;
 
 export function categoryLabel(lang: Lang, section?: string): string | undefined {

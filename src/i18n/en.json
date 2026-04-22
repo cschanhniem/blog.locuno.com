@@ -4,8 +4,14 @@
     "titleTemplate": "%s · Locuno AI Handbook",
     "description": "AI, digital skills, and guidance for children",
     "twitter": {
-      "site": "@safelocuno",
-      "creator": "@safelocuno"
+      "site": "",
+      "creator": ""
+    },
+    "links": {
+      "chat": "",
+      "website": "",
+      "facebook": "",
+      "youtube": ""
     }
   },
   "language": {

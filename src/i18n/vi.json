@@ -4,8 +4,14 @@
     "titleTemplate": "%s · Sổ Tay AI Locuno",
     "description": "AI, kỹ năng số và định hướng cho trẻ",
     "twitter": {
-      "site": "@safelocuno",
-      "creator": "@safelocuno"
+      "site": "",
+      "creator": ""
+    },
+    "links": {
+      "chat": "",
+      "website": "",
+      "facebook": "",
+      "youtube": ""
     }
   },
   "language": {
