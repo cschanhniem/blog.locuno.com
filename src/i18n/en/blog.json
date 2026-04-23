@@ -1,0 +1,29 @@
+{
+  "post": {
+    "publishedAt": "Published at",
+    "modifiedAt": "Modified at",
+    "relatedPosts": "Related Posts"
+  },
+  "categories": {
+    "education": "Education",
+    "skills": "Digital Skills",
+    "safety": "Safety",
+    "ai": "AI",
+    "research": "Deep Research"
+  },
+  "headings": {
+    "research": {
+      "h1": "Deep Research",
+      "h2": "Long-form analysis on AI systems, orchestration, and the practical shifts shaping learning and execution."
+    }
+  },
+  "tags": {
+    "ai-literacy": "AI Literacy",
+    "parenting": "Parenting",
+    "future-ready": "Future Ready",
+    "protection": "Protection",
+    "wellbeing": "Wellbeing",
+    "tools": "Tools",
+    "deep-dive": "Deep Dive"
+  }
+}

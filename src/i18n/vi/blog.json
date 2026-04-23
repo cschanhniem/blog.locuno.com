@@ -1,0 +1,29 @@
+{
+  "post": {
+    "publishedAt": "Ngày đăng",
+    "modifiedAt": "Cập nhật",
+    "relatedPosts": "Bài viết liên quan"
+  },
+  "categories": {
+    "education": "Giáo dục",
+    "skills": "Kỹ năng số",
+    "safety": "An toàn",
+    "ai": "AI",
+    "research": "Nghiên cứu sâu"
+  },
+  "headings": {
+    "research": {
+      "h1": "Nghiên cứu sâu",
+      "h2": "Phân tích dài hơi về hệ thống AI, điều phối tác vụ và những thay đổi thực tế trong học tập lẫn thực thi."
+    }
+  },
+  "tags": {
+    "ai-literacy": "Hiểu biết AI",
+    "parenting": "Đồng hành",
+    "future-ready": "Sẵn sàng tương lai",
+    "protection": "Bảo vệ",
+    "wellbeing": "Sức khoẻ tinh thần",
+    "tools": "Công cụ",
+    "deep-dive": "Nghiên cứu sâu"
+  }
+}

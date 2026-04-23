@@ -1,0 +1,66 @@
+{
+  "site": {
+    "name": "Locuno AI Handbook",
+    "titleTemplate": "%s · Locuno AI Handbook",
+    "description": "AI, digital skills, and guidance for children",
+    "twitter": {
+      "site": "",
+      "creator": ""
+    },
+    "links": {
+      "chat": "",
+      "website": "",
+      "facebook": "",
+      "youtube": ""
+    }
+  },
+  "language": {
+    "name": "English",
+    "switch": "Switch Language",
+    "current": "Current Language"
+  },
+  "theme": {
+    "toggle": "Toggle Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System Default"
+  },
+  "dateFormat": "MMM D, YYYY",
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "notFound": "Not Found",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "readMore": "Read More",
+    "pagination": {
+      "totalPosts": "{count} posts in total",
+      "totalPostsWithLang": "{lang} {count} posts in total",
+      "pageInfo": "Page {current} of {total}",
+      "noPosts": "No posts",
+      "noPostsInCategory": "No posts in this category yet. Please check back later."
+    }
+  },
+  "navigation": {
+    "education": "Education",
+    "skills": "Digital Skills",
+    "safety": "Safety",
+    "research": "Deep Research",
+    "ai": "AI"
+  },
+  "footer": {
+    "copyright": "Copyright",
+    "allRightsReserved": "All Rights Reserved",
+    "more": "More",
+    "author": "Author",
+    "categories": "Categories",
+    "tags": "Tags",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "contactUs": "Contact Us"
+  },
+  "chat": {
+    "title": "Open Chat"
+  }
+}

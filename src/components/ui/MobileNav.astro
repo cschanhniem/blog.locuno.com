@@ -43,7 +43,7 @@ const alignmentClass = 'text-left';
               </button>
               <div class="hidden px-2.5 py-1" data-accordion-panel={`m-${i}`}>
                 <a
-                  href={getRelativeLocaleUrl(resolvedLang, `/category/${item.key}`)}
+                  href={getRelativeLocaleUrl(resolvedLang, item.href)}
                   class="block rounded-sm px-2.5 py-1.5 text-sm text-gray-700 transition-colors hover:bg-black/20 hover:text-gray-950 dark:text-gray-300 dark:hover:bg-white/15 dark:hover:text-white"
                 >
                   {t(resolvedLang, `navigation.${item.key}`)}
@@ -62,7 +62,7 @@ const alignmentClass = 'text-left';
             </div>
           ) : (
             <a
-              href={getRelativeLocaleUrl(resolvedLang, `/category/${item.key}`)}
+              href={getRelativeLocaleUrl(resolvedLang, item.href)}
               class="block rounded-sm px-2.5 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-black/20 hover:text-gray-950 dark:text-gray-300 dark:hover:bg-white/15 dark:hover:text-white"
             >
               {t(resolvedLang, `navigation.${item.key}`)}

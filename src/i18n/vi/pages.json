@@ -1,49 +1,4 @@
 {
-  "site": {
-    "name": "Sổ Tay AI Locuno",
-    "titleTemplate": "%s · Sổ Tay AI Locuno",
-    "description": "AI, kỹ năng số và định hướng cho trẻ",
-    "twitter": {
-      "site": "",
-      "creator": ""
-    },
-    "links": {
-      "chat": "",
-      "website": "",
-      "facebook": "",
-      "youtube": ""
-    }
-  },
-  "language": {
-    "name": "Tiếng Việt",
-    "switch": "Chuyển ngôn ngữ",
-    "current": "Ngôn ngữ hiện tại"
-  },
-  "theme": {
-    "toggle": "Chuyển giao diện",
-    "light": "Sáng",
-    "dark": "Tối",
-    "system": "Theo hệ thống"
-  },
-  "dateFormat": "D MMM, YYYY",
-  "post": {
-    "publishedAt": "Ngày đăng",
-    "modifiedAt": "Cập nhật",
-    "relatedPosts": "Bài viết liên quan"
-  },
-  "categories": {
-    "education": "Giáo dục",
-    "skills": "Kỹ năng số",
-    "safety": "An toàn"
-  },
-  "tags": {
-    "ai-literacy": "Hiểu biết AI",
-    "parenting": "Đồng hành",
-    "future-ready": "Sẵn sàng tương lai",
-    "protection": "Bảo vệ",
-    "wellbeing": "Sức khoẻ tinh thần",
-    "tools": "Công cụ"
-  },
   "headings": {
     "home": {
       "title": "Trang chủ",
@@ -85,12 +40,11 @@
     "tools": {
       "h1": "Công cụ",
       "h2": "Ứng dụng giải pháp công nghệ hiệu quả và an toàn"
+    },
+    "research": {
+      "h1": "Nghiên cứu sâu",
+      "h2": "Phân tích dài hơi về hệ thống AI, điều phối tác vụ và những thay đổi thực tế trong học tập lẫn thực thi."
     }
-  },
-  "navigation": {
-    "education": "Giáo dục",
-    "skills": "Kỹ năng số",
-    "safety": "An toàn"
   },
   "pages": {
     "about": {
@@ -114,33 +68,6 @@
       "description": "Các từ khoá trọng tâm xoay quanh AI, kỹ năng số và an toàn cho trẻ."
     }
   },
-  "common": {
-    "loading": "Đang tải...",
-    "error": "Lỗi",
-    "notFound": "Không tìm thấy",
-    "back": "Quay lại",
-    "next": "Tiếp",
-    "previous": "Trước",
-    "readMore": "Đọc thêm",
-    "pagination": {
-      "totalPosts": "Tổng cộng {count} bài viết",
-      "totalPostsWithLang": "{lang} có tổng cộng {count} bài viết",
-      "pageInfo": "Trang {current} / {total}",
-      "noPosts": "Chưa có bài viết",
-      "noPostsInCategory": "Chuyên mục này chưa có bài viết. Vui lòng quay lại sau."
-    }
-  },
-  "footer": {
-    "copyright": "Bản quyền",
-    "allRightsReserved": "Mọi quyền được bảo lưu",
-    "more": "Thêm",
-    "author": "Tác giả",
-    "categories": "Chuyên mục",
-    "tags": "Thẻ",
-    "privacyPolicy": "Chính sách riêng tư",
-    "termsOfService": "Điều khoản dịch vụ",
-    "contactUs": "Liên hệ"
-  },
   "homepage": {
     "featuredPosts": "Bắt đầu từ đây",
     "topArticles": "Đọc tiếp",
@@ -155,8 +82,5 @@
   "search": {
     "title": "Tìm kiếm",
     "subtitle": "Tìm bài viết về AI, kỹ năng số và định hướng cho trẻ"
-  },
-  "chat": {
-    "title": "Mở chat"
   }
 }

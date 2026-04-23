@@ -1,49 +1,4 @@
 {
-  "site": {
-    "name": "Locuno AI Handbook",
-    "titleTemplate": "%s · Locuno AI Handbook",
-    "description": "AI, digital skills, and guidance for children",
-    "twitter": {
-      "site": "",
-      "creator": ""
-    },
-    "links": {
-      "chat": "",
-      "website": "",
-      "facebook": "",
-      "youtube": ""
-    }
-  },
-  "language": {
-    "name": "English",
-    "switch": "Switch Language",
-    "current": "Current Language"
-  },
-  "theme": {
-    "toggle": "Toggle Theme",
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System Default"
-  },
-  "dateFormat": "MMM D, YYYY",
-  "post": {
-    "publishedAt": "Published at",
-    "modifiedAt": "Modified at",
-    "relatedPosts": "Related Posts"
-  },
-  "categories": {
-    "education": "Education",
-    "skills": "Digital Skills",
-    "safety": "Safety"
-  },
-  "tags": {
-    "ai-literacy": "AI Literacy",
-    "parenting": "Parenting",
-    "future-ready": "Future Ready",
-    "protection": "Protection",
-    "wellbeing": "Wellbeing",
-    "tools": "Tools"
-  },
   "headings": {
     "home": {
       "title": "Home",
@@ -85,12 +40,11 @@
     "tools": {
       "h1": "Tools",
       "h2": "Applying technology solutions effectively and safely"
+    },
+    "research": {
+      "h1": "Deep Research",
+      "h2": "Long-form analysis on AI systems, orchestration, and the practical shifts shaping learning and execution."
     }
-  },
-  "navigation": {
-    "education": "Education",
-    "skills": "Digital Skills",
-    "safety": "Safety"
   },
   "pages": {
     "about": {
@@ -114,33 +68,6 @@
       "description": "Core themes around AI, digital capability, and child safety."
     }
   },
-  "common": {
-    "loading": "Loading...",
-    "error": "Error",
-    "notFound": "Not Found",
-    "back": "Back",
-    "next": "Next",
-    "previous": "Previous",
-    "readMore": "Read More",
-    "pagination": {
-      "totalPosts": "{count} posts in total",
-      "totalPostsWithLang": "{lang} {count} posts in total",
-      "pageInfo": "Page {current} of {total}",
-      "noPosts": "No posts",
-      "noPostsInCategory": "No posts in this category yet. Please check back later."
-    }
-  },
-  "footer": {
-    "copyright": "Copyright",
-    "allRightsReserved": "All Rights Reserved",
-    "more": "More",
-    "author": "Author",
-    "categories": "Categories",
-    "tags": "Tags",
-    "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service",
-    "contactUs": "Contact Us"
-  },
   "homepage": {
     "featuredPosts": "Start Here",
     "topArticles": "Read Next",
@@ -155,8 +82,5 @@
   "search": {
     "title": "Search",
     "subtitle": "Find articles on AI, digital skills, and guidance for children"
-  },
-  "chat": {
-    "title": "Open Chat"
   }
 }

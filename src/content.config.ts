@@ -8,20 +8,21 @@ export const DEFAULT_LANG = 'en';
 
 const post = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx,markdown}', base: './src/content/posts' }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    category: z.string(),
-    tags: z.array(z.string()).default([]),
-    pubDate: z.coerce.date(),
-    updatedDate: z.coerce.date().optional(),
-    author: z.string().default('Locuno Team'),
-    heroImage: z.url(),
-    heroImageAlt: z.string(),
-    locales: z.enum(LANGS),
-    draft: z.boolean().default(false),
-    featured: z.boolean().default(false),
-  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      category: z.string(),
+      tags: z.array(z.string()).default([]),
+      pubDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
+      author: z.string().default('Locuno Team'),
+      heroImage: z.union([z.string().url(), image()]),
+      heroImageAlt: z.string(),
+      locales: z.enum(LANGS),
+      draft: z.boolean().default(false),
+      featured: z.boolean().default(false),
+    }),
 });
 
 const page = defineCollection({

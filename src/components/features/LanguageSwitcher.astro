@@ -3,6 +3,7 @@ import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { Lang } from '@/utils/i18n';
 import { DEFAULT_LANG, SUPPORTED_LANGS, stripLocalePrefix } from '@/utils/i18n';
 import { t } from '@/utils/translations';
+import { getLocalizedPost, getPostBySlug, postUrl } from '@/utils/posts';
 
 interface Props {
   lang?: Lang;
@@ -22,6 +23,23 @@ const currentFlag = FLAG_MAP[resolvedLang] ?? '🌐';
 const currentPath = Astro.url.pathname;
 const currentTail = `${Astro.url.search}${Astro.url.hash}`;
 const localeAgnosticPath = stripLocalePrefix(currentPath);
+const postMatch = currentPath.match(/^\/(vi|en)\/posts\/(.+?)\/?$/);
+const currentPostSlug = postMatch?.[2];
+const currentPost = currentPostSlug ? getPostBySlug(resolvedLang, currentPostSlug) : undefined;
+
+function resolveLocaleHref(targetLang: Lang): string {
+  if (targetLang === resolvedLang) {
+    return `${getRelativeLocaleUrl(targetLang, localeAgnosticPath)}${currentTail}`;
+  }
+
+  if (currentPost) {
+    const localized = getLocalizedPost(currentPost, targetLang);
+    if (localized) return `${postUrl(localized, targetLang)}${currentTail}`;
+    return `${getRelativeLocaleUrl(targetLang, '/posts/')}${currentTail}`;
+  }
+
+  return `${getRelativeLocaleUrl(targetLang, localeAgnosticPath)}${currentTail}`;
+}
 ---
 
 <details class={`relative ${className ?? ''}`.trim()} data-lang-root>
@@ -37,7 +55,7 @@ const localeAgnosticPath = stripLocalePrefix(currentPath);
     {
       SUPPORTED_LANGS.map((l) => (
         <a
-          href={`${getRelativeLocaleUrl(l, localeAgnosticPath)}${currentTail}`}
+          href={resolveLocaleHref(l)}
           class={`flex w-full items-center gap-2 rounded-sm px-2.5 py-1.5 text-sm transition-colors hover:bg-black/20 hover:text-gray-950 dark:hover:bg-white/15 dark:hover:text-white ${l === resolvedLang ? 'font-medium text-gray-950 dark:text-white' : 'text-gray-700 dark:text-gray-300'}`}
         >
           <span aria-hidden="true">{FLAG_MAP[l] ?? '🌐'}</span>

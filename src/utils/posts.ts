@@ -1,10 +1,11 @@
+// Post utility functions
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Lang } from '@/utils/i18n';
 import { SUPPORTED_LANGS } from '@/utils/i18n';
 import { categorySlug, tagSlug } from '@/utils/translations';
 
 export type PostEntry = CollectionEntry<'post'>;
-export const CATEGORY_KEYS = ['education', 'skills', 'safety'] as const;
+export const CATEGORY_KEYS = ['education', 'skills', 'safety', 'ai', 'research'] as const;
 export type CategoryKey = (typeof CATEGORY_KEYS)[number];
 export const TAG_KEYS = [
   'ai-literacy',
@@ -13,6 +14,7 @@ export const TAG_KEYS = [
   'protection',
   'wellbeing',
   'tools',
+  'deep-dive',
 ] as const;
 export type TagKey = (typeof TAG_KEYS)[number];
 
@@ -31,6 +33,16 @@ export function postSlug(entry: PostEntry, lang: Lang): string {
 
 export function postUrl(entry: PostEntry, lang: Lang): string {
   return `/${lang}/posts/${postSlug(entry, lang)}/`;
+}
+
+function imageIdentity(entry: PostEntry): string | undefined {
+  const img = entry.data.heroImage as unknown;
+  if (typeof img === 'string') return img;
+  if (img && typeof img === 'object' && 'src' in img) {
+    const src = (img as { src?: unknown }).src;
+    if (typeof src === 'string') return src;
+  }
+  return undefined;
 }
 
 function createLangBuckets<K extends string>(
@@ -69,11 +81,19 @@ function buildPostIndexes(posts: readonly PostEntry[]) {
   const postsByLang = createLangLists();
   const postsByCategory = createLangBuckets(CATEGORY_KEYS);
   const postsByTag = createLangBuckets(TAG_KEYS);
+  const postsByLangAndSlug = SUPPORTED_LANGS.reduce<Record<Lang, Record<string, PostEntry>>>(
+    (acc, lang) => {
+      acc[lang] = {};
+      return acc;
+    },
+    {} as Record<Lang, Record<string, PostEntry>>,
+  );
 
   for (const post of posts) {
     const lang = post.data.locales as Lang;
     if (!(SUPPORTED_LANGS as readonly string[]).includes(lang)) continue;
     postsByLang[lang].push(post);
+    postsByLangAndSlug[lang][postSlug(post, lang)] = post;
 
     const categoryKey = categorySlug(lang, post.data.category);
     if (categoryKey && categoryKey in postsByCategory[lang]) {
@@ -99,7 +119,7 @@ function buildPostIndexes(posts: readonly PostEntry[]) {
     }
   }
 
-  return { postsByLang, postsByCategory, postsByTag };
+  return { postsByLang, postsByCategory, postsByTag, postsByLangAndSlug };
 }
 
 const postIndexes = await publishedPostsPromise.then((posts) => buildPostIndexes(posts));
@@ -110,6 +130,44 @@ export function getPublishedPosts(): Promise<Array<PostEntry>> {
 
 export function getPublishedPostsByLang(): Record<Lang, Array<PostEntry>> {
   return postIndexes.postsByLang;
+}
+
+export function getPostBySlug(lang: Lang, slug: string): PostEntry | undefined {
+  return postIndexes.postsByLangAndSlug[lang]?.[slug];
+}
+
+export function getLocalizedPost(source: PostEntry, targetLang: Lang): PostEntry | undefined {
+  const sourceLang = source.data.locales as Lang;
+  if (sourceLang === targetLang) return source;
+
+  const sameSlug = getPostBySlug(targetLang, postSlug(source, sourceLang));
+  if (sameSlug) return sameSlug;
+
+  const targetPosts = postIndexes.postsByLang[targetLang] ?? [];
+  const sourceDate = new Date(source.data.pubDate).getTime();
+  const sourceCategory = source.data.category;
+  const sourceAuthor = source.data.author;
+  const sourceFeatured = source.data.featured;
+  const sourceImage = imageIdentity(source);
+  const sourceTags = new Set(source.data.tags ?? []);
+
+  const sameDate = targetPosts.filter((p) => new Date(p.data.pubDate).getTime() === sourceDate);
+  if (sameDate.length === 0) return undefined;
+
+  const scored = sameDate
+    .map((candidate) => {
+      let score = 0;
+      if (candidate.data.category === sourceCategory) score += 3;
+      if (candidate.data.author === sourceAuthor) score += 2;
+      if (candidate.data.featured === sourceFeatured) score += 1;
+      if (imageIdentity(candidate) === sourceImage) score += 2;
+      const overlap = (candidate.data.tags ?? []).filter((tag) => sourceTags.has(tag)).length;
+      score += overlap;
+      return { candidate, score };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  return scored[0]?.candidate;
 }
 
 export function getPostsForLang(lang: Lang): Array<PostEntry> {

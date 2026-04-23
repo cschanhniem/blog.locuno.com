@@ -16,25 +16,34 @@ const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
 
 <nav class={`hidden lg:flex items-center gap-6 ${className ?? ''}`.trim()}>
   {
-    NAV_ITEMS.map((item) => (
-      <div class="group relative">
+    NAV_ITEMS.map((item) =>
+      item.tags.length > 0 ? (
+        <div class="group relative">
+          <a
+            href={getRelativeLocaleUrl(resolvedLang, item.href)}
+            class="nav-link inline-flex items-center gap-1 py-2 text-sm font-semibold no-underline hover:no-underline focus:no-underline"
+          >
+            <span>{t(resolvedLang, `navigation.${item.key}`)}</span>
+          </a>
+          <div class="nav-dropdown pointer-events-none absolute top-full left-1/2 z-50 hidden min-w-36 -translate-x-1/2 rounded-lg py-1.5 shadow-xl group-hover:pointer-events-auto group-hover:block">
+            {item.tags.map((tag) => (
+              <a
+                href={getRelativeLocaleUrl(resolvedLang, `/tags/${tag}`)}
+                class="block rounded-sm px-3 py-1.5 text-sm text-gray-700 transition-colors hover:bg-black/20 hover:text-gray-950 dark:text-gray-300 dark:hover:bg-white/15 dark:hover:text-white"
+              >
+                {t(resolvedLang, `tags.${tag}`)}
+              </a>
+            ))}
+          </div>
+        </div>
+      ) : (
         <a
-          href={getRelativeLocaleUrl(resolvedLang, `/category/${item.key}`)}
+          href={getRelativeLocaleUrl(resolvedLang, item.href)}
           class="nav-link inline-flex items-center gap-1 py-2 text-sm font-semibold no-underline hover:no-underline focus:no-underline"
         >
           <span>{t(resolvedLang, `navigation.${item.key}`)}</span>
         </a>
-        <div class="nav-dropdown pointer-events-none absolute top-full left-1/2 z-50 hidden min-w-36 -translate-x-1/2 rounded-lg py-1.5 shadow-xl group-hover:pointer-events-auto group-hover:block">
-          {item.tags.map((tag) => (
-            <a
-              href={getRelativeLocaleUrl(resolvedLang, `/tags/${tag}`)}
-              class="block rounded-sm px-3 py-1.5 text-sm text-gray-700 transition-colors hover:bg-black/20 hover:text-gray-950 dark:text-gray-300 dark:hover:bg-white/15 dark:hover:text-white"
-            >
-              {t(resolvedLang, `tags.${tag}`)}
-            </a>
-          ))}
-        </div>
-      </div>
-    ))
+      ),
+    )
   }
 </nav>

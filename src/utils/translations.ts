@@ -3,10 +3,10 @@ import { SUPPORTED_LANGS, DEFAULT_LANG } from '@/utils/i18n';
 
 type Dict = Record<string, unknown>;
 
-const modules = import.meta.glob('../i18n/*.json', { eager: true });
+const modules = import.meta.glob('../i18n/**/*.json', { eager: true });
 
 function extractLang(path: string): Lang | undefined {
-  const m = path.match(/\/i18n\/(\w+)\.json$/);
+  const m = path.match(/\/i18n\/(\w+)\//) || path.match(/\/i18n\/(\w+)\.json$/);
   const code = (m?.[1] || '') as Lang;
   return (SUPPORTED_LANGS as readonly string[]).includes(code) ? code : undefined;
 }
@@ -28,7 +28,7 @@ const DICTS = SUPPORTED_LANGS.reduce<Record<Lang, Dict>>(
 for (const [path, mod] of Object.entries(modules)) {
   const lang = extractLang(path);
   if (!lang) continue;
-  DICTS[lang] = asDict(mod);
+  DICTS[lang] = { ...DICTS[lang], ...asDict(mod) };
 }
 
 function get(obj: Dict, key: string): unknown {

@@ -5,7 +5,7 @@ import PostCardCover from '@/cards/PostCardCover.astro';
 import CardWithPriority from '@/features/CardWithPriority.astro';
 import type { Lang } from '@/utils/i18n';
 import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
-import { t } from '@/utils/translations';
+import { tOptional } from '@/utils/translations';
 import { getPostsByTag, postUrl } from '@/utils/posts';
 
 export const prerender = true;
@@ -18,6 +18,7 @@ export async function getStaticPaths() {
     'protection',
     'wellbeing',
     'tools',
+    'deep-dive',
   ] as const;
   return SUPPORTED_LANGS.flatMap((lang) => TAG_KEYS.map((slug) => ({ params: { lang, slug } })));
 }
@@ -48,13 +49,19 @@ const page = {
   },
 };
 
-const h1 = t(lang, `headings.${slug}.h1`) || t(lang, `tags.${slug}`) || slug;
-const h2 = t(lang, `headings.${slug}.h2`);
+const h1 = tOptional(lang, `headings.${slug}.h1`) ?? tOptional(lang, `tags.${slug}`) ?? slug;
+const h2 = tOptional(lang, `headings.${slug}.h2`);
 const title = h1;
 const description = h2;
+const landingLayoutProps = {
+  lang,
+  title,
+  canonical: Astro.url.href,
+  ...(description ? { description } : {}),
+};
 ---
 
-<LandingLayout lang={lang} title={title} description={description} canonical={Astro.url.href}>
+<LandingLayout {...landingLayoutProps}>
   <fragment slot="header">
     <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{h1}</h1>
     <h2 class="mt-2 text-xl text-gray-600 dark:text-gray-300">{h2}</h2>

@@ -1,14 +1,4 @@
 ---
-import type { Lang } from '@/utils/i18n';
-
-interface Props {
-  lang?: Lang;
-}
-
-const { lang } = Astro.props as Props;
-const resolvedLang = ((Astro.currentLocale as string | undefined) ??
-  (lang as string | undefined) ??
-  'en') as Lang;
 const isCJK = false;
 const containerClass = [
   'prose dark:prose-invert mx-auto',

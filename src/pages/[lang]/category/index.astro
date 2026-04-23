@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 
 const lang = ((Astro.params.lang as Lang) || DEFAULT_LANG) as Lang;
 
-const CATEGORY_KEYS = ['education', 'skills', 'safety'] as const;
+  const CATEGORY_KEYS = ['education', 'skills', 'safety', 'research'] as const;
 
 function countFor(key: (typeof CATEGORY_KEYS)[number]) {
   return countPostsByCategory(lang, key);
