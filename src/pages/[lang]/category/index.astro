@@ -2,7 +2,7 @@
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import type { Lang } from '@/utils/i18n';
 import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
-import { countPostsByCategory } from '@/utils/posts';
+import { CATEGORY_KEYS, countPostsByCategory } from '@/utils/posts';
 import { t } from '@/utils/translations';
 
 export const prerender = true;
@@ -12,8 +12,6 @@ export async function getStaticPaths() {
 }
 
 const lang = ((Astro.params.lang as Lang) || DEFAULT_LANG) as Lang;
-
-  const CATEGORY_KEYS = ['education', 'skills', 'safety', 'research'] as const;
 
 function countFor(key: (typeof CATEGORY_KEYS)[number]) {
   return countPostsByCategory(lang, key);

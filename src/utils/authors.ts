@@ -4,7 +4,7 @@ import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
 
 export type AuthorEntry = CollectionEntry<'author'>;
 
-const publishedAuthors = await getCollection('author', (entry) => !entry.data.draft);
+const publishedAuthors = await getCollection('author', (entry: AuthorEntry) => !entry.data.draft);
 
 function createLangMap(): Record<Lang, Array<AuthorEntry>> {
   return SUPPORTED_LANGS.reduce<Record<Lang, Array<AuthorEntry>>>(

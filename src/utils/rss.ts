@@ -2,6 +2,7 @@ import rss from '@astrojs/rss';
 import type { Lang } from './i18n';
 import { t } from './translations';
 import { getPostsForLang, postUrl, type PostEntry } from './posts';
+import { LANGUAGE_TAGS } from './seo';
 
 function toItem(entry: PostEntry) {
   const lang = entry.data.locales as Lang;
@@ -14,17 +15,24 @@ function toItem(entry: PostEntry) {
   };
 }
 
-export async function generateRssForLang(lang: Lang, site: URL) {
-  const items = getPostsForLang(lang).slice(0, 5).map(toItem);
+export async function generateRssForLang(lang: Lang, site: URL, feedPath = `/${lang}/rss.xml`) {
+  const items = getPostsForLang(lang).map(toItem);
 
   const title = `${t(lang, 'site.name')} · ${lang.toUpperCase()}`;
   const description = t(lang, 'site.description');
+  const feedUrl = new URL(feedPath, site).href;
 
   return rss({
     title,
     description,
     site,
     items,
-    customData: `<language>${lang}</language>`,
+    customData: [
+      `<language>${LANGUAGE_TAGS[lang] ?? lang}</language>`,
+      `<atom:link href="${feedUrl}" rel="self" type="application/rss+xml" />`,
+    ].join(''),
+    xmlns: {
+      atom: 'http://www.w3.org/2005/Atom',
+    },
   });
 }

@@ -18,7 +18,7 @@ export const TAG_KEYS = [
 ] as const;
 export type TagKey = (typeof TAG_KEYS)[number];
 
-const publishedPostsPromise = getCollection('post', (entry) => !entry.data.draft);
+const publishedPostsPromise = getCollection('post', (entry: PostEntry) => !entry.data.draft);
 
 export function sortPostsByDate(posts: readonly PostEntry[]): Array<PostEntry> {
   return [...posts].sort(
@@ -122,7 +122,9 @@ function buildPostIndexes(posts: readonly PostEntry[]) {
   return { postsByLang, postsByCategory, postsByTag, postsByLangAndSlug };
 }
 
-const postIndexes = await publishedPostsPromise.then((posts) => buildPostIndexes(posts));
+const postIndexes = await publishedPostsPromise.then((posts: Array<PostEntry>) =>
+  buildPostIndexes(posts),
+);
 
 export function getPublishedPosts(): Promise<Array<PostEntry>> {
   return publishedPostsPromise;
@@ -151,21 +153,25 @@ export function getLocalizedPost(source: PostEntry, targetLang: Lang): PostEntry
   const sourceImage = imageIdentity(source);
   const sourceTags = new Set(source.data.tags ?? []);
 
-  const sameDate = targetPosts.filter((p) => new Date(p.data.pubDate).getTime() === sourceDate);
+  const sameDate = targetPosts.filter(
+    (post: PostEntry) => new Date(post.data.pubDate).getTime() === sourceDate,
+  );
   if (sameDate.length === 0) return undefined;
 
   const scored = sameDate
-    .map((candidate) => {
+    .map((candidate: PostEntry) => {
       let score = 0;
       if (candidate.data.category === sourceCategory) score += 3;
       if (candidate.data.author === sourceAuthor) score += 2;
       if (candidate.data.featured === sourceFeatured) score += 1;
       if (imageIdentity(candidate) === sourceImage) score += 2;
-      const overlap = (candidate.data.tags ?? []).filter((tag) => sourceTags.has(tag)).length;
+      const overlap = (candidate.data.tags ?? []).filter((tag: string) =>
+        sourceTags.has(tag),
+      ).length;
       score += overlap;
       return { candidate, score };
     })
-    .sort((a, b) => b.score - a.score);
+    .sort((a: { score: number }, b: { score: number }) => b.score - a.score);
 
   return scored[0]?.candidate;
 }
@@ -183,7 +189,9 @@ export function getPostsByCategory(lang: Lang, slug: string): Array<PostEntry> {
 
 export function getPostsByTag(lang: Lang, slug: string): Array<PostEntry> {
   const key = tagSlug(lang, slug);
-  return key && key in postIndexes.postsByTag[lang] ? postIndexes.postsByTag[lang][key as TagKey] : [];
+  return key && key in postIndexes.postsByTag[lang]
+    ? postIndexes.postsByTag[lang][key as TagKey]
+    : [];
 }
 
 export function countPostsByCategory(lang: Lang, slug: string): number {

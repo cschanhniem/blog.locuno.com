@@ -5,7 +5,8 @@ import RelatedList from '@/widgets/RelatedList.astro';
 import PostLayout from '@/layouts/PostLayout.astro';
 import type { Lang } from '@/utils/i18n';
 import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
-import { getPublishedPosts } from '@/utils/posts';
+import { LANGUAGE_TAGS } from '@/utils/seo';
+import { getLocalizedPost, getPublishedPosts, postUrl } from '@/utils/posts';
 
 export const prerender = true;
 
@@ -53,6 +54,19 @@ const tags = entry.data.tags as string[] | undefined;
 const authorUrl = getRelativeLocaleUrl(lang, '/author/');
 const heroImage = entry.data.heroImage;
 const heroImageAlt = entry.data.heroImageAlt;
+const languageAlternates = SUPPORTED_LANGS.flatMap((targetLang) => {
+  const localizedPost = getLocalizedPost(entry, targetLang);
+  return localizedPost
+    ? [
+        {
+          hrefLang: LANGUAGE_TAGS[targetLang] ?? targetLang,
+          href: new URL(postUrl(localizedPost, targetLang), Astro.site!).href,
+        },
+      ]
+    : [];
+});
+const defaultPost = getLocalizedPost(entry, DEFAULT_LANG);
+const xDefaultPostLang = defaultPost ? DEFAULT_LANG : lang;
 const postLayoutProps = {
   lang,
   title,
@@ -67,6 +81,8 @@ const postLayoutProps = {
   ...(authorUrl ? { authorUrl } : {}),
   ...(section ? { section } : {}),
   ...(tags ? { tags } : {}),
+  languageAlternates,
+  xDefaultHref: new URL(postUrl(defaultPost ?? entry, xDefaultPostLang), Astro.site!).href,
 };
 ---
 

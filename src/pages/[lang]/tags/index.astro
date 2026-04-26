@@ -2,7 +2,7 @@
 import LandingLayout from '@/layouts/LandingLayout.astro';
 import type { Lang } from '@/utils/i18n';
 import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
-import { countPostsByTag } from '@/utils/posts';
+import { TAG_KEYS, countPostsByTag } from '@/utils/posts';
 import { t } from '@/utils/translations';
 
 export const prerender = true;
@@ -12,16 +12,6 @@ export async function getStaticPaths() {
 }
 
 const lang = ((Astro.params.lang as Lang) || DEFAULT_LANG) as Lang;
-
-const TAG_KEYS = [
-  'ai-literacy',
-  'parenting',
-  'future-ready',
-  'protection',
-  'wellbeing',
-  'tools',
-    'deep-dive',
-] as const;
 
 function countFor(key: (typeof TAG_KEYS)[number]) {
   return countPostsByTag(lang, key);

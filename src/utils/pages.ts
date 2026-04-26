@@ -4,7 +4,7 @@ import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
 
 export type PageEntry = CollectionEntry<'page'>;
 
-const publishedPages = await getCollection('page', (entry) => !entry.data.draft);
+const publishedPages = await getCollection('page', (entry: PageEntry) => !entry.data.draft);
 
 function createLangMap(): Record<Lang, Array<PageEntry>> {
   return SUPPORTED_LANGS.reduce<Record<Lang, Array<PageEntry>>>(

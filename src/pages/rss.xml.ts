@@ -4,5 +4,5 @@ import { generateRssForLang } from '@/utils/rss';
 export const prerender = true;
 
 export async function GET(context: { site: URL }) {
-  return generateRssForLang(DEFAULT_LANG, context.site);
+  return generateRssForLang(DEFAULT_LANG, context.site, '/rss.xml');
 }

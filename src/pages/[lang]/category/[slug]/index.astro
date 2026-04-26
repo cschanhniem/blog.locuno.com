@@ -6,12 +6,11 @@ import CardWithPriority from '@/features/CardWithPriority.astro';
 import type { Lang } from '@/utils/i18n';
 import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
 import { tOptional } from '@/utils/translations';
-import { getPostsByCategory, postUrl } from '@/utils/posts';
+import { CATEGORY_KEYS, getPostsByCategory, postUrl } from '@/utils/posts';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const CATEGORY_KEYS = ['education', 'skills', 'safety', 'research'] as const;
   return SUPPORTED_LANGS.flatMap((lang) =>
     CATEGORY_KEYS.map((slug) => ({ params: { lang, slug } })),
   );

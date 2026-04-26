@@ -6,20 +6,11 @@ import CardWithPriority from '@/features/CardWithPriority.astro';
 import type { Lang } from '@/utils/i18n';
 import { DEFAULT_LANG, SUPPORTED_LANGS } from '@/utils/i18n';
 import { tOptional } from '@/utils/translations';
-import { getPostsByTag, postUrl } from '@/utils/posts';
+import { TAG_KEYS, getPostsByTag, postUrl } from '@/utils/posts';
 
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const TAG_KEYS = [
-    'ai-literacy',
-    'parenting',
-    'future-ready',
-    'protection',
-    'wellbeing',
-    'tools',
-    'deep-dive',
-  ] as const;
   return SUPPORTED_LANGS.flatMap((lang) => TAG_KEYS.map((slug) => ({ params: { lang, slug } })));
 }
 

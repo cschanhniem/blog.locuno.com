@@ -2,6 +2,16 @@
 import type { Lang } from '@/utils/i18n';
 import { SUPPORTED_LANGS, DEFAULT_LANG, stripLocalePrefix } from '@/utils/i18n';
 import { t, tOptional } from '@/utils/translations';
+import {
+  DEFAULT_OG_IMAGE,
+  LANGUAGE_TAGS,
+  OG_LOCALES,
+  ORGANIZATION_LOGO,
+  absoluteUrl,
+  canonicalizeUrl,
+  type BreadcrumbItem,
+  type LanguageAlternate,
+} from '@/utils/seo';
 import { SEO } from 'astro-seo';
 import { getAbsoluteLocaleUrl, getRelativeLocaleUrl } from 'astro:i18n';
 import type { ImageMetadata } from 'astro';
@@ -21,6 +31,9 @@ interface Props {
   authorUrl?: string;
   section?: string;
   tags?: string[];
+  languageAlternates?: LanguageAlternate[];
+  xDefaultHref?: string;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
 const {
@@ -38,6 +51,9 @@ const {
   authorUrl,
   section,
   tags = [],
+  languageAlternates: providedLanguageAlternates,
+  xDefaultHref: providedXDefaultHref,
+  breadcrumbs = [],
 } = Astro.props as Props;
 
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
@@ -61,54 +77,52 @@ const providedSrc =
     : image && typeof (image as any).src === 'string'
       ? (image as any).src
       : undefined;
-const DEFAULT_OG = '/open-graph.webp';
-const imageSrc = providedSrc || DEFAULT_OG;
-const absImage =
-  imageSrc.startsWith('http://') || imageSrc.startsWith('https://')
-    ? imageSrc
-    : new URL(imageSrc, Astro.site!).href;
+const imageSrc = providedSrc || DEFAULT_OG_IMAGE;
+const absImage = absoluteUrl(imageSrc, Astro.site!);
 
-const absAuthorUrl = authorUrl
-  ? authorUrl.startsWith('http://') || authorUrl.startsWith('https://')
-    ? authorUrl
-    : new URL(authorUrl, Astro.site!).href
-  : undefined;
+const absAuthorUrl = authorUrl ? absoluteUrl(authorUrl, Astro.site!) : undefined;
 
 const isArticle = Boolean(publishedTime);
-
-const ogLocaleMap: Record<Lang, string> = {
-  vi: 'vi_VN',
-  en: 'en_US',
-};
-const languageTagMap: Record<Lang, string> = {
-  vi: 'vi-VN',
-  en: 'en-US',
-};
-const languageTag = languageTagMap[resolvedLang] ?? resolvedLang;
-const ogLocale = ogLocaleMap[resolvedLang] ?? 'en_US';
+const languageTag = LANGUAGE_TAGS[resolvedLang] ?? resolvedLang;
+const ogLocale = OG_LOCALES[resolvedLang] ?? 'en_US';
 const ogAlternateLocales = SUPPORTED_LANGS.filter((l) => l !== resolvedLang).map(
-  (l) => ogLocaleMap[l],
+  (l) => OG_LOCALES[l],
 );
 
 const localeAgnosticPath = stripLocalePrefix(Astro.url.pathname);
-const languageAlternates = SUPPORTED_LANGS.map((l) => ({
-  hrefLang: languageTagMap[l] ?? l,
+const generatedLanguageAlternates = SUPPORTED_LANGS.map((l) => ({
+  hrefLang: LANGUAGE_TAGS[l] ?? l,
   href: getAbsoluteLocaleUrl(l, localeAgnosticPath),
 }));
-const xDefaultHref = getAbsoluteLocaleUrl(DEFAULT_LANG, localeAgnosticPath);
+const languageAlternates = providedLanguageAlternates?.length
+  ? providedLanguageAlternates.map((alternate) => ({
+      hrefLang: alternate.hrefLang,
+      href: canonicalizeUrl(alternate.href, Astro.site!),
+    }))
+  : generatedLanguageAlternates.map((alternate) => ({
+      hrefLang: alternate.hrefLang,
+      href: canonicalizeUrl(alternate.href, Astro.site!),
+    }));
+const xDefaultHref = canonicalizeUrl(
+  providedXDefaultHref || getAbsoluteLocaleUrl(DEFAULT_LANG, localeAgnosticPath),
+  Astro.site!,
+);
 
 const rawCanonical = canonical || new URL(Astro.url.pathname, Astro.site!).href;
-const finalCanonical = (() => {
-  try {
-    const u = new URL(rawCanonical);
-    if (!u.pathname.endsWith('/') && !u.pathname.split('/').pop()?.includes('.')) {
-      u.pathname += '/';
-    }
-    return u.href;
-  } catch {
-    return rawCanonical;
-  }
-})();
+const finalCanonical = canonicalizeUrl(rawCanonical, Astro.site!);
+
+const siteUrl = canonicalizeUrl('/', Astro.site!);
+const organizationId = `${siteUrl}#organization`;
+const websiteId = `${siteUrl}#website`;
+const webpageId = `${finalCanonical}#webpage`;
+const breadcrumbId = `${finalCanonical}#breadcrumb`;
+const logoUrl = absoluteUrl(ORGANIZATION_LOGO, Astro.site!);
+const normalizedBreadcrumbs = breadcrumbs
+  .filter((item) => item.name && item.item)
+  .map((item) => ({
+    name: item.name,
+    item: canonicalizeUrl(item.item, Astro.site!),
+  }));
 
 const seoProps: any = {
   title: title ?? undefined,
@@ -198,30 +212,80 @@ const seoProps: any = {
   (() => {
     const canonicalURL = finalCanonical;
     const pageTitle = title ? titleTemplate.replace('%s', title) : siteName;
-    const ld: any = {
-      '@context': 'https://schema.org',
-      '@type': isArticle ? 'Article' : 'WebPage',
+    const pageNode: any = {
+      '@id': webpageId,
+      '@type': isArticle ? 'BlogPosting' : 'WebPage',
       inLanguage: languageTag,
       name: pageTitle,
       url: canonicalURL,
       description: metaDescription,
-      mainEntityOfPage: canonicalURL,
+      isPartOf: { '@id': websiteId },
+      mainEntityOfPage: { '@id': webpageId },
     };
-    if (absImage) ld.image = absImage;
+    if (absImage) {
+      pageNode.image = absImage;
+      pageNode.primaryImageOfPage = { '@type': 'ImageObject', url: absImage };
+    }
+    if (normalizedBreadcrumbs.length) pageNode.breadcrumb = { '@id': breadcrumbId };
     if (isArticle) {
-      if (title) ld.headline = title;
-      if (publishedTime) ld.datePublished = new Date(publishedTime).toISOString();
-      if (modifiedTime) ld.dateModified = new Date(modifiedTime).toISOString();
-      ld.publisher = { '@type': 'Organization', name: siteName };
+      if (title) pageNode.headline = title;
+      if (publishedTime) pageNode.datePublished = new Date(publishedTime).toISOString();
+      if (modifiedTime) pageNode.dateModified = new Date(modifiedTime).toISOString();
+      pageNode.publisher = { '@id': organizationId };
+      pageNode.isAccessibleForFree = true;
       if (authorName)
-        ld.author = {
+        pageNode.author = {
           '@type': 'Person',
           name: authorName,
           ...(absAuthorUrl ? { url: absAuthorUrl } : {}),
         };
-      if (section) ld.articleSection = section;
-      if (Array.isArray(tags) && tags.length) ld.keywords = tags.join(', ');
+      if (section) pageNode.articleSection = section;
+      if (Array.isArray(tags) && tags.length) {
+        pageNode.keywords = tags.join(', ');
+        pageNode.about = tags.map((tag) => ({ '@type': 'Thing', name: tag }));
+      }
     }
-    return <script type="application/ld+json" is:inline set:html={JSON.stringify(ld)} />;
+    const graph: any[] = [
+      {
+        '@type': 'Organization',
+        '@id': organizationId,
+        name: siteName,
+        url: siteUrl,
+        logo: { '@type': 'ImageObject', url: logoUrl },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': websiteId,
+        name: siteName,
+        url: siteUrl,
+        inLanguage: languageTag,
+        publisher: { '@id': organizationId },
+        potentialAction: {
+          '@type': 'SearchAction',
+          target: `${canonicalizeUrl(`/${resolvedLang}/search/`, Astro.site!)}?q={search_term_string}`,
+          'query-input': 'required name=search_term_string',
+        },
+      },
+      pageNode,
+    ];
+    if (normalizedBreadcrumbs.length) {
+      graph.push({
+        '@type': 'BreadcrumbList',
+        '@id': breadcrumbId,
+        itemListElement: normalizedBreadcrumbs.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          item: item.item,
+        })),
+      });
+    }
+    return (
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })}
+      />
+    );
   })()
 }

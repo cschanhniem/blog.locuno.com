@@ -10,6 +10,7 @@ import { t, categoryLabel as i18nCategoryLabel, categorySlug } from '@/utils/tra
 import { formatDate } from '@/utils/date';
 import { getRelativeLocaleUrl } from 'astro:i18n';
 import type { ImageMetadata } from 'astro';
+import type { BreadcrumbItem, LanguageAlternate } from '@/utils/seo';
 
 interface Props {
   lang?: Lang;
@@ -26,6 +27,8 @@ interface Props {
   section?: string;
   tags?: string[];
   noProse?: boolean;
+  languageAlternates?: LanguageAlternate[];
+  xDefaultHref?: string;
 }
 
 const {
@@ -42,6 +45,8 @@ const {
   authorUrl,
   section,
   tags = [],
+  languageAlternates,
+  xDefaultHref,
 } = Astro.props as Props;
 const resolvedLang = ((Astro.currentLocale as Lang | undefined) ??
   (langProp as Lang | undefined) ??
@@ -65,6 +70,8 @@ const headerProps = {
   ...(authorUrl ? { authorUrl } : {}),
   ...(section ? { section } : {}),
   ...(Array.isArray(tags) && tags.length ? { tags } : {}),
+  ...(languageAlternates?.length ? { languageAlternates } : {}),
+  ...(xDefaultHref ? { xDefaultHref } : {}),
   breadcrumbs: [
     {
       name: t(resolvedLang, 'site.name') || 'iDiMi',
@@ -82,7 +89,7 @@ const headerProps = {
         ]
       : []),
     { name: title, item: Astro.url.href },
-  ],
+  ] satisfies BreadcrumbItem[],
 };
 ---
 
