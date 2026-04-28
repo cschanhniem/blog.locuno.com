@@ -1,0 +1,227 @@
+---
+title: "The Sovereign Classroom: Architecting Hyper-Personalization through On-Device Small Language Models and Digital Autonomy"
+description: "How on-device Small Language Models protect student data sovereignty while delivering personalized, high-quality education free from cloud dependency and data exfiltration."
+category: "research"
+tags:
+  - "ai-literacy"
+  - "deep-dive"
+  - "education"
+  - "digital-sovereignty"
+  - "small-language-models"
+pubDate: 2026-04-28
+author: "Locuno Team"
+heroImage: "../../../assets/images/the-sovereign-classroom.png"
+heroImageAlt: "A sovereign classroom with on-device AI learning, protecting student data and digital autonomy"
+draft: false
+featured: false
+locales: en
+---
+
+## The Myth of Cloud Intelligence: A Betrayal of Digital Sovereignty
+
+The contemporary educational landscape is currently intoxicated by a singular, seductive myth: that intelligence is a commodity best served from the cloud. For the past three years, the industry narrative has been dominated by the belief that larger models necessarily equate to stronger capabilities.¹ We have been told that a student's intellectual growth is best facilitated by sending their queries, their struggles, and their most sensitive cognitive metadata to a server farm owned by a foreign conglomerate. This is not just a technical oversight; it is a fundamental betrayal of digital sovereignty. In the rush to "revolutionize" the classroom, we have inadvertently created a "bullseye" for data exfiltration, where the most intimate details of a child's learning process are stored in jurisdictions with conflicting legal regimes.²
+
+The friction is palpable. Current cloud-based AI implementation in schools feels increasingly "robotic" and "slop-heavy." We see teachers receiving assignments made with zero effort, students using AI for "metacognitive laziness," and a flood of low-quality educational "slop" that lacks nuance, humor, or a clear concept of uncertainty.⁴ The synthesis required is a radical pivot toward the edge. True hyper-personalization does not happen in a centralized data center; it happens on the student's tablet, within the physical boundaries of the classroom, using Small Language Models (SLMs) that are fine-tuned to the individual, yet private by design. This report deconstructs the technical and philosophical architecture of the "Sovereign Classroom," where AI enhances human intuition without siphoning away the human soul.
+
+## The Deconstruction: Silicon Scarcity and the Silicon Frontier
+
+To understand why the future of education is small and local, one must first deconstruct the physical constraints of the hardware that students actually use. The industry is witnessing a structural driving force toward Small Language Models (SLMs) due to real-world deployment constraints and data sovereignty requirements.¹ On-device AI is defined by the "Flash-DRAM Paradox." Unlike a server environment where HBM (High Bandwidth Memory) is abundant but compute time is expensive, a mobile device—such as a school-issued tablet—is starved for DRAM but relatively rich in flash storage.⁶
+
+### The Physics of the Edge
+
+A typical high-end tablet in 2026 may boast 8GB to 12GB of shared memory, while its flash storage reaches 256GB or 512GB.⁷ Traditional Large Language Models (LLMs) fail on these devices because their "KV Cache"—the memory used to store the context of a conversation—expands quadratically. At a 128K context window, a model's KV cache can require up to 12.8GB of RAM, effectively exceeding the entire memory budget of a standard student device.⁶
+
+This physical reality has forced a divergence in model architecture. Google's Gemma 4, for instance, is not a single model scaled to different sizes, but two entirely different designs. The "Edge" variants (E2B and E4B) are built on the logic of "compressing memory at the cost of compute," while the server models spend memory to save compute.⁶ The table below illustrates the critical technical trade-offs between these two philosophies.
+
+| Feature | Edge Models (Gemma 4 E2B/E4B) | Server Models (Gemma 4 26B/31B) |
+| :--- | :--- | :--- |
+| Primary Constraint | DRAM Scarcity / Battery Life | Compute Cost (FLOPS) |
+| Memory Strategy | Compress KV Cache aggressively | Spend DRAM to maintain discrimination |
+| GQA Ratio | Uniform 8:1 or 4:1 across all layers | Selective 2:1 (Local) to 8:1 (Global) |
+| Embedding Tables | Per-Layer Embeddings (PLE) in Flash | Single wide hidden dimension |
+| Context Optimization | Cross-Layer KV Sharing (83% reduction) | Independent per-layer KV cache |
+| Hidden Dimension | Narrow (e.g., 1,536) | Wide (up to 5,376) |
+
+The most sophisticated innovation in edge AI is the use of Per-Layer Embeddings (PLE). In the E2B model, approximately 46% of the parameter budget is dedicated to 35 separate embedding tables.⁶ Because these tables are "parked" in the device's flash storage rather than active DRAM, they are "effectively free" in terms of memory footprint, allowing a small model to maintain high semantic capacity without crashing the system.⁶
+
+### Mathematical Tax and Model Morphologies
+
+When evaluating models for the classroom, one must look beyond simple accuracy scores to the "Pareto points" where accuracy meets VRAM efficiency. Recent empirical studies on reasoning-oriented models like Phi-4, Llama-3.1, and Gemma-4 reveal that mid-scale Mixture-of-Experts (MoE) designs often occupy the most favorable deployment frontiers.⁹ The mathematical representation of inference cost is often approximated by the number of active parameters per token, but on edge devices, the actual bottleneck is memory bandwidth.
+
+For a model to run locally, the total memory footprint must satisfy constraints that reduce parameter count through 4-bit quantization, compress KV through Grouped Query Attention (GQA), and manage optimized runtimes like ONNX or llama.cpp.¹¹
+
+| Model | Architecture | Active Params (B) | Mean VRAM (GB) | Latency (s) | Weighted Accuracy |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Gemma-4-E4B | MoE | 4.0 | 14.89 | 5.458 | 0.675 |
+| Gemma-4-E2B | MoE | 2.0 | 9.54 | 4.913 | 0.493 |
+| Phi-4-mini | Dense | 3.8 | 7.15 | 3.983 | 0.203 |
+| Qwen3-8B | Dense | 8.0 | 15.26 | 5.041 | 0.322 |
+| Gemma-4-26B | MoE | 3.8 | 48.07 | 8.041 | 0.663 |
+
+The data suggests that Gemma-4-E4B currently offers the best overall result for reasoning tasks, doubling the accuracy of smaller models like Phi-4-mini while remaining within the VRAM limits of premium student hardware (≥16GB RAM).⁹ However, for "Compact Tier" devices with only 2GB to 4GB of RAM, models like Qwen3 0.6B become the only viable candidates, despite their higher rate of format violations and weaker instruction following.¹⁵
+
+## The Friction: The Hidden Truth of the Cloud
+
+The current "cloud-first" approach to EdTech is fraught with systemic risks that are often ignored in marketing brochures. For organizations subject to strict sovereignty and privacy rules, sending student data to external AI services is a non-starter.²
+
+### Digital Sovereignty and the Extraterritorial Trap
+
+The core of digital sovereignty is control: control over data, technology, and operations within legal boundaries.² When a school district adopts a cloud-based LLM, it becomes exposed to "extraterritorial laws." Data processed in a foreign jurisdiction can be subject to government access requests that the school has no power to audit or refuse.² Furthermore, Gartner predicts that by 2027, over 40% of AI-related data breaches will result from improper use of Generative AI across borders.²
+
+In Europe, the response has been a "marathon toward digital sovereignty," led by France and Germany.¹⁶ The "Digital Commons" initiative and the expansion of the GDPR are designed to ensure that the "intelligence layer" of an enterprise—or a school—remains under its own control.¹⁶ The risk is not merely theoretical; once data is consumed by a cloud AI model for training, reclaiming control is far more difficult than in traditional IT systems.²
+
+### The Proliferation of "Educational Slop"
+
+Perhaps more damaging than the legal risk is the pedagogical erosion caused by "un-curated" AI. Generative AI is flooding the internet and the classroom with "slop"—low-quality material created with zero human care regarding accuracy or fluency.⁴
+
+- **Factual Inaccuracies**: AI "hallucinations" often present subtle but plausible-sounding errors, such as claiming the rate of an enzyme-catalyzed reaction increases indefinitely as enzyme concentration increases.⁴
+- **Metacognitive Laziness**: Exposure to authoritative but "unmoored" AI output promotes a form of "deskilling," where students turn to AI for superficial answers rather than engaging with conceptual foundations.⁴
+- **Audience Mismatch**: AI-generated videos often cover entry-level overviews but assume advanced knowledge of other topics, leading to learner confusion.⁴
+- **Language Drift**: SLMs trained on English-dominant datasets often default to English output even when instructed otherwise, subtly erasing local cultural and linguistic nuances.¹⁵
+
+The friction is best summarized by the "Miller Questions" every IT department should ask an AI vendor: Will student data be used to train public models? How long is it retained? And who owns the generated insights?¹⁹ Currently, the answer is often "yes," "forever," and "the vendor."
+
+### The Cybersecurity Bullseye
+
+AI models contain a trove of sensitive data that proves irresistible to attackers. Data exfiltration through prompt injection attacks can manipulate generative systems into exposing private documents or conversation histories.³ In one instance, ChatGPT displayed conversation titles from other users, a clear indicator of the inherent leakage risks in multi-tenant cloud architectures.³ In a school environment, where PII (Personally Identifiable Information) includes not just names and grades but behavioral metadata and biometric data from surveillance, the "attack surface" is expanded beyond the reach of traditional perimeter security.²
+
+## The Synthesis: Architecting the Private Educational Fabric
+
+To resolve the conflict between AI capability and data sovereignty, we must synthesize a workflow where AI enhancements are local, personal, and strictly governed. This involves the deployment of localized SLM "factories" and the adoption of unified inference frameworks.
+
+### QUAD: A Unified Deployment Framework
+
+The technical bottleneck of running multiple specialized AI tutors on a single tablet (e.g., a math tutor, a history tutor, and a coding assistant) is the need for separate model binaries. Traditional pipelines require a copy of the foundation model for each "Low-Rank Adapter" (LoRA), leading to redundant storage and high runtime overhead.¹²
+
+We advocate for the QUAD (Quantization with Unified Adaptive Distillation) framework. QUAD treats LoRA weights as runtime inputs rather than embedding them into a static graph.¹² By aligning multiple LoRAs under a shared quantization profile through knowledge distillation, the QUAD framework enables:
+
+- 4x improvement in runtime latency.
+- 6x reduction in memory usage.
+- Dynamic task switching without reloading model binaries.¹²
+
+### Federated Learning: The Privacy Shield
+
+To improve these local models without ever seeing student data, schools must employ Federated Learning (FL). In an FL framework, student responses are processed locally on their tablets. Only the "optimized model parameters"—mathematical gradients of what the student learned—are shared with a central school server.²⁰
+
+An "adaptive weighted averaging strategy" is then used to aggregate these updates, where weights are adjusted based on data quality and relevance from individual classrooms.²⁰ This ensures that the global model becomes more "intelligent" about student misconceptions while the raw student data—the assignments, the grades, and the behavioral metadata—never leaves the room.²
+
+### Hardware Profiling for the Classroom
+
+Deploying these models requires a nuanced understanding of current tablet hardware. The following table profiles the most common school-issued or student-owned devices in 2026 and their suitability for specific SLMs.
+
+| Device | Processor | RAM | Storage Type | Recommended SLM |
+| :--- | :--- | :--- | :--- | :--- |
+| Apple iPad Air (M4) | Apple M4 | 8GB | Unified | Gemma-4-E2B (4-bit) |
+| Samsung Tab S11 Ultra | Dimensity 9400+ | 12/16GB | UFS 4.0 | Gemma-4-E4B (4-bit) |
+| Lenovo Tab P12 Pro | Snapdragon 870 | 8GB | UFS 3.1 | Phi-4-mini (4-bit) |
+| OnePlus Pad Lite | Helio G100 | 6GB | eMMC/UFS | Qwen3-0.6B (8-bit) |
+| Microsoft Surface Go 4 | Intel N200 | 4/8GB | NVMe | Phi-3.5-mini (4-bit) |
+
+The critical insight here is that while "cloud models" are hardware-agnostic, "sovereign models" are hardware-intimate. The choice of quantization (4-bit vs 8-bit) and the use of technologies like QLoRA (Quantized Low-Rank Adaptation) are essential to preserving accuracy while fitting within these narrow memory corridors.¹¹
+
+## Case in Point: The Digital Apprentice
+
+Imagine a classroom in 2026. A student, let's call him Leo, is struggling with the concept of centripetal force. In a traditional setting, Leo might be too embarrassed to raise his hand for the third time. In a cloud-based setting, Leo's "struggle data" might be harvested to build a predictive profile for recruitment companies.¹⁹
+
+In the Sovereign Classroom, Leo's tablet runs a quantized Llama-3.3-8B model locally. The AI doesn't just give him the answer—it uses "dialogic scaffolding".²²
+
+- **The Diagnostic**: The AI identifies that Leo is confusing velocity with acceleration.
+- **The Intervention**: It presents a "worked example" of a car turning a corner, using the tablet's NPU (Neural Processing Unit) to generate a real-time simulation.
+- **The Privacy**: All of Leo's "aha!" moments and his initial failures are encrypted at rest using AES-256.²³ The teacher receives a summary dashboard of "class-wide misconceptions" without needing to see Leo's private chat history.²⁴
+
+This is the "Keep, Change, Center" framework in action. We keep the proven methods of knowledge tracing; we change the delivery through generative AI; and we center the opportunity for student agency and meaning-making.²²
+
+## Deep Dive into Pedagogy: Cognitive Load and Neural Nets
+
+An AI tutor is only effective if it respects the biological limits of the human brain. Cognitive Load Theory (CLT), pioneered by John Sweller, provides the foundational insights into how instructional design influences learning effectiveness through the management of working memory.²⁵
+
+### Managing the Three Loads
+
+The Sovereign AI must be architected to optimize the three types of cognitive load:
+
+| Load Type | Origin | Sovereign AI Strategy |
+| :--- | :--- | :--- |
+| Intrinsic Load | Task complexity and prior knowledge. | Segment information into small, sequential steps; use scaffolding.²⁷ |
+| Extraneous Load | Poor interface or redundant information. | Minimize visual distractions; use dual-channel processing (audio + visuals).²⁵ |
+| Germane Load | Meaningful cognitive processing/schema building. | Encourage self-explanation, elaborative interrogation, and active retrieval.²⁸ |
+
+Recent findings demonstrate that high-quality human-AI interaction significantly reduces extraneous cognitive load, which is positively related to learning motivation.²⁵ The Harvard Physics study (2025) provided an empirical benchmark: students using a "content-rich prompt engineered" AI tutor achieved more than double the learning gains relative to an active lecture group, while spending less time on the task (49 minutes vs 60 minutes).¹⁸
+
+### The Effectiveness of Conversational Scaffolding
+
+Unlike legacy Intelligent Tutoring Systems (ITS) that functioned as adaptive problem sets, the new generation of conversational tutors—powered by SLMs—can engage with a student's actual thoughts and misconceptions in real time.²² Research from the World Bank in Nigeria showed that interventions using Microsoft Copilot chatbots equated to 1.5 to 2 years of "business-as-usual" schooling in terms of learning outcomes.²⁹
+
+However, "pure" AI is not enough. The most successful models are those that integrate "Expertly Crafted Curricula" with AI-driven flexibility.²⁷ This ensures that the AI stays within the "Zone of Proximal Development," providing enough guidance to overcome impasses without "supplanting" the hard work of thinking.³¹
+
+## Critical Reflection: The Cost of Autonomy
+
+The transition to on-device SLMs is not a silver bullet; it involves significant technical and operational trade-offs that must be analyzed with professional detachment.
+
+### Technical Trade-offs: Accuracy vs. VRAM
+
+The "Quantization Cliff" is a real phenomenon. Moving from FP16 to INT4 can reduce model size by 75%, but it may cause a sudden degradation in reasoning quality.¹¹ While QLoRA recovers much of this loss, SLMs with fewer than 3 billion parameters still exhibit specific failures:
+
+- **Format Compliance**: They frequently violate JSON schemas or add unnecessary natural language "chatter".¹⁵
+- **Numerical Reasoning**: Counting characters or performing multi-step arithmetic remains unreliable at the sub-3B scale.¹⁵
+- **Language Drift**: Models may default to English or interpret ISO language codes ("pt") unreliably.¹⁵
+
+### Ethical and Economic Implications
+
+The economic shift from Opex (cloud token fees) to Capex (hardware investment) is stark. While a self-hosted SLM for a large school district costs approximately 70% less per month than a GPT-4o enterprise license, the initial "initialization sprint" for data engineering and hardware procurement can take 6 to 12 months.¹
+
+| Daily Request Volume | GPT-4o Monthly Cost (Est.) | Sovereign SLM Monthly Cost (Est.) |
+| :--- | :--- | :--- |
+| 50,000 / day | $3,450 | $933 |
+| 100,000 / day | $6,900 | $933 |
+| 500,000 / day | $34,500 | $1,866 (2 GPUs) |
+| 1,000,000 / day | $69,000 | $3,732 (4 GPUs) |
+
+From an ethical perspective, the "Sovereign Classroom" eliminates the risk of "predictive profiling" by third parties, but it places the burden of bias mitigation squarely on the school district.¹⁹ Small, local models can inherit the biases of their (often synthetic) training data, requiring a "Responsible and Ethical Principles" (REP) framework to ensure fairness and transparency.³⁵
+
+## The Horizon: Reclaiming the Digital Commons
+
+The transition to on-device SLMs is more than a technical migration; it is an act of pedagogical resistance. By moving AI to the edge, we protect the "foundational habit" of critical thinking from the erosion of cloud-based dependency.³¹ We ensure that every school has its own "sovereign digital infrastructure" that adheres to the highest ethical standards.¹⁶
+
+The "Sovereign Classroom" is the only model that allows us to provide world-class, personalized education without selling our students' futures to the highest bidder. The roadmap for 2026-2030 involves the proliferation of "SLM Factories"—industrialized platforms for creating fine-tuned, domain-specific models powered by enterprise data—and the integration of multi-modal capabilities (image/text/voice) directly on student handhelds.¹
+
+To remain relevant in an AI-driven society, institutions must pivot from "owning infrastructure" to "owning outcomes." The Sovereign Classroom is not just a place where students learn; it is a space where their digital identity is defended. To evaluate your institution's readiness for this transition, we invite you to participate in diagnostic assessment of your data flows, model selection, and digital autonomy. The era of "AI slop" is over; the era of the Sovereign Classroom has begun.
+
+## References
+
+1. Small Language Models: Phi-4 vs Gemma 3 vs Llama 3.3 — Enterprise Edge AI [2026], accessed April 28, 2026, https://www.meta-intelligence.tech/en/insight-slm-enterprise
+2. The Impact of AI on Digital Sovereignty | Thales, accessed April 28, 2026, https://cpl.thalesgroup.com/blog/cybersecurity/impact-of-ai-on-digital-sovereignty
+3. Exploring privacy issues in the age of AI - IBM, accessed April 28, 2026, https://www.ibm.com/think/insights/ai-privacy
+4. AI-Generated "Slop" in Online Biomedical Science Educational ..., accessed April 28, 2026, https://pmc.ncbi.nlm.nih.gov/articles/PMC12634010/
+5. Tired of AI in an educational setting : r/Teachers - Reddit, accessed April 28, 2026, https://www.reddit.com/r/Teachers/comments/1rxdehz/tired_of_ai_in_an_educational_setting/
+6. Google's Gemma 4 is Weirder than you Realize | by Devansh | Apr ..., accessed April 28, 2026, https://machine-learning-made-simple.medium.com/googles-gemma-4-is-weirder-than-you-realize-17d00d95b0d5
+7. How much RAM & storage do you actually need in a tablet in 2026? - Reddit, accessed April 28, 2026, https://www.reddit.com/r/tablets/comments/1su86jl/how_much_ram_storage_do_you_actually_need_in_a/
+8. Best Tablets for Students in the US (2026) - Fueler, accessed April 28, 2026, https://fueler.io/blog/best-tablets-for-students-in-the-us
+9. Gemma 4, Phi-4, and Qwen3: Accuracy–Efficiency Tradeoffs in Dense and MoE Reasoning Language Models - arXiv, accessed April 28, 2026, https://arxiv.org/html/2604.07035v1
+10. [2604.07035] Gemma 4, Phi-4, and Qwen3: Accuracy-Efficiency Tradeoffs in Dense and MoE Reasoning Language Models - arXiv, accessed April 28, 2026, https://arxiv.org/abs/2604.07035
+11. Fine-tuning LLMs Guide | Unsloth Documentation, accessed April 28, 2026, https://unsloth.ai/docs/get-started/fine-tuning-llms-guide
+12. Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge - arXiv, accessed April 28, 2026, https://arxiv.org/html/2603.29535v1
+13. Use local small language models (SLMs) in Azure App Service - Microsoft Learn, accessed April 28, 2026, https://learn.microsoft.com/en-us/azure/app-service/scenario-ai-local-small-language-model
+14. (PDF) Gemma 4, Phi-4, and Qwen3: Accuracy-Efficiency Tradeoffs in ..., accessed April 28, 2026, https://www.researchgate.net/publication/403641917_Gemma_4_Phi-4_and_Qwen3_Accuracy-Efficiency_Tradeoffs_in_Dense_and_MoE_Reasoning_Language_Models
+15. Less Is More: Engineering Challenges of On-Device Small Language Model Integration in a Mobile Application - arXiv, accessed April 28, 2026, https://arxiv.org/html/2604.24636v1
+16. The European marathon towards digital sovereignty | Digital Watch Observatory, accessed April 28, 2026, https://dig.watch/updates/the-european-marathon-towards-digital-sovereignty
+17. Summit on European Digital Sovereignty delivers landmark commitments, accessed April 28, 2026, https://uk.diplomatie.gouv.fr/en/summit-european-digital-sovereignty-delivers-landmark-commitments
+18. AI tutor time on task: Total time students in the AI group spent... - ResearchGate, accessed April 28, 2026, https://www.researchgate.net/figure/AI-tutor-time-on-task-Total-time-students-in-the-AI-group-spent-interacting-with-the_fig2_392839220
+19. AI in Higher Education: Protecting Student Data Privacy | EdTech Magazine, accessed April 28, 2026, https://edtechmagazine.com/higher/article/2026/01/ai-higher-education-protecting-student-data-privacy-perfcon
+20. Privacy-Preserved Automated Scoring using Federated Learning for Educational Research, accessed April 28, 2026, https://arxiv.org/html/2503.11711v1
+21. Fine-Tuning LLMs: LoRA, Quantization, and Distillation Simplified - DEV Community, accessed April 28, 2026, https://dev.to/iamfaham/fine-tuning-llms-lora-quantization-and-distillation-simplified-12nf
+22. The Path to Conversational AI Tutors: Integrating Tutoring Best Practices and Targeted Technologies to Produce Scalable AI Agents - ResearchGate, accessed April 28, 2026, https://www.researchgate.net/publication/401133086_The_Path_to_Conversational_AI_Tutors_Integrating_Tutoring_Best_Practices_and_Targeted_Technologies_to_Produce_Scalable_AI_Agents
+23. The Challenges of Data Privacy and Cybersecurity in Cloud Computing and Artificial Intelligence (AI) Applications for EQA Organizations - PMC, accessed April 28, 2026, https://pmc.ncbi.nlm.nih.gov/articles/PMC12743334/
+24. Opinion: AI in schools could be a disaster, but it doesn't have to be - Local News Matters, accessed April 28, 2026, https://localnewsmatters.org/2026/04/27/ai-schools-disaster-not-inevitable-opinion/
+25. Enhancing deep learning in AI-enhanced education: a dual mediation model of cognitive load and learning motivation through interaction quality - Frontiers, accessed April 28, 2026, https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2026.1768822/full
+26. Cognitive Load Theory: How to Optimize Learning - Let's Go Learn, accessed April 28, 2026, https://www.letsgolearn.com/education-reform/cognitive-load-theory-how-to-optimize-learning/
+27. Intelligent Tutoring Systems: 7 Research-Backed Principles for Building an Effective AI Tutor, accessed April 28, 2026, https://thirdspacelearning.com/us/blog/intelligent-tutoring-systems/
+28. Challenging Cognitive Load Theory: The Role of Educational Neuroscience and Artificial Intelligence in Redefining Learning Efficacy - PMC, accessed April 28, 2026, https://pmc.ncbi.nlm.nih.gov/articles/PMC11852728/
+29. What the research shows about generative AI in tutoring | Brookings, accessed April 28, 2026, https://brookings.edu/articles/what-the-research-shows-about-generative-ai-in-tutoring/
+30. Harvard just proved AI tutors beat classrooms. Now what? : r/artificial - Reddit, accessed April 28, 2026, https://www.reddit.com/r/artificial/comments/1q4t8b5/harvard_just_proved_ai_tutors_beat_classrooms_now/
+31. AI Use in Schools Is Quickly Increasing but Guidance Lags Behind - RAND, accessed April 28, 2026, https://www.rand.org/pubs/research_reports/RRA4180-1.html
+32. Michael Ranney's research works | Princeton University and other places - ResearchGate, accessed April 28, 2026, https://www.researchgate.net/scientific-contributions/Michael-Ranney-2005665276
+33. Deploy Small Language Models (SLMs) Faster: The Case for Owning Outcomes Over Infrastructure - Uniphore, accessed April 28, 2026, https://www.uniphore.com/blog/deploy-small-language-models-faster-the-case-for-owning-outcomes-over-infrastructure/
+34. The "Third Way" to Space Power: Europe's Digital Sovereignty Advantage, accessed April 28, 2026, https://law.stanford.edu/2026/01/23/the-third-way-to-space-power-europes-digital-sovereignty-advantage/
+35. The Landscape of AI in Science Education: What is Changing and How to Respond Xiaoming Zhai1, Kent Crippen2 - arXiv, accessed April 28, 2026, https://arxiv.org/pdf/2602.18469
+36. Generative AI-Driven Learning Path Optimization: A Framework Based on Transformer and Cognitive Load Theory - Web of Proceedings - Francis Academic Press, accessed April 28, 2026, https://webofproceedings.org/proceedings_series/ESSP/GEMMSD%202025/SC610325.pdf
+37. What Are Small Language Models (SLMs)? - Oracle, accessed April 28, 2026, https://www.oracle.com/artificial-intelligence/small-language-models/

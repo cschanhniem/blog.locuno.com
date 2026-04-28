@@ -1,0 +1,215 @@
+---
+title: "Lớp học Tự chủ: Kiến trúc Cá nhân hóa Thông qua SLM On-device và Quyền Tự trị Kỹ thuật số"
+description: "Cách các Mô hình Ngôn ngữ Nhỏ on-device bảo vệ chủ quyền dữ liệu học sinh trong khi cung cấp giáo dục cá nhân hóa mà không phụ thuộc vào đám mây."
+category: "research"
+tags:
+  - "ai-literacy"
+  - "deep-dive"
+  - "education"
+  - "digital-sovereignty"
+  - "small-language-models"
+pubDate: 2026-04-28
+author: "Locuno Team"
+heroImage: "../../../assets/images/the-sovereign-classroom.png"
+heroImageAlt: "Một lớp học tự chủ với AI on-device, bảo vệ dữ liệu và quyền tự trị kỹ thuật số của học sinh"
+draft: false
+featured: false
+locales: vi
+---
+
+## Ảo tưởng của Trí tuệ Đám mây: Sự Phản bội Chủ quyền Số
+
+Ngành giáo dục hiện đại đang bị "say" trong một ảo tưởng ngọt ngào: rằng trí tuệ nhân tạo là một loại hàng hóa tốt nhất khi được phục vụ từ "đám mây". Suốt ba năm qua, giới công nghệ bị ám ảnh bởi niềm tin rằng mô hình càng lớn thì năng lực càng mạnh. Chúng ta được dạy rằng sự phát triển trí tuệ của học sinh sẽ đạt đỉnh nếu chúng ta gửi mọi câu hỏi, mọi trăn trở và cả những siêu dữ liệu nhận thức (cognitive metadata) nhạy cảm nhất về các trang trại máy chủ của một tập đoàn đa quốc gia nào đó.
+
+Đây không chỉ là một sai lầm về mặt kỹ thuật; đó là sự phản bội đối với quyền chủ quyền số. Trong cơn lốc "cách mạng hóa" lớp học, chúng ta vô tình biến dữ liệu của trẻ em thành một "tâm điểm" (bullseye) cho việc khai thác trái phép, nơi những chi tiết thầm kín nhất trong quá trình học tập bị lưu trữ tại các khu vực pháp lý có quy định chồng chéo và đầy rủi ro.
+
+Điểm nghẽn (The Friction) đã hiện rõ. Việc triển khai AI dựa trên đám mây hiện nay tạo ra cảm giác "robot" và đầy rẫy "rác AI" (AI slop). Chúng ta thấy giáo viên nhận được những bài tập nộp cho có lệ, học sinh rơi vào trạng thái "lười biếng siêu nhận thức" (metacognitive laziness), và một làn sóng nội dung giáo dục chất lượng thấp, thiếu chiều sâu, thiếu sự hóm hỉnh hay ý thức về sự không chắc chắn.
+
+Locuno đề xuất một sự tổng hợp mới: một bước ngoặt triệt để về phía "biên" (edge). Cá nhân hóa thực thụ không diễn ra ở trung tâm dữ liệu nghìn tỷ đô; nó diễn ra ngay trên máy tính bảng của học sinh, trong ranh giới vật lý của lớp học, thông qua các Mô hình Ngôn ngữ Nhỏ (SLM) được tinh chỉnh riêng biệt nhưng tuyệt đối riêng tư.
+
+## Deconstruction: Nghịch lý Silicon và Giới hạn tại "Biên"
+
+Để hiểu tại sao tương lai của giáo dục là "nhỏ và cục bộ", trước hết phải giải phẫu những rào cản vật lý của phần cứng mà học sinh đang cầm trên tay. Ngành công nghiệp đang chứng kiến một động lực cấu trúc hướng tới SLM do những hạn chế về triển khai thực tế và yêu cầu về chủ quyền dữ liệu.
+
+AI trên thiết bị (On-device AI) được định nghĩa bởi "Nghịch lý Flash-DRAM". Khác với môi trường máy chủ nơi bộ nhớ băng thông cao (HBM) dồi dào nhưng thời gian tính toán đắt đỏ, một chiếc máy tính bảng học sinh lại "đói" DRAM nhưng tương đối dư dả về bộ nhớ Flash.
+
+### Vật lý của thiết bị biên
+
+Một chiếc máy tính bảng cao cấp vào năm 2026 thường có khoảng 8GB đến 12GB bộ nhớ dùng chung (shared memory), trong khi lưu trữ Flash lên đến 256GB hoặc 512GB. Các mô hình ngôn ngữ lớn (LLM) truyền thống thất bại trên các thiết bị này vì "KV Cache" — bộ nhớ dùng để lưu ngữ cảnh hội thoại — tăng trưởng theo hàm mũ. Với cửa sổ ngữ cảnh 128K, bộ nhớ KV cache có thể ngốn tới 12.8GB RAM, vượt xa tổng ngân sách bộ nhớ của một thiết bị tiêu chuẩn.
+
+Thực tế này buộc các kiến trúc mô hình phải rẽ nhánh. Google Gemma 4 là một ví dụ điển hình: họ không chỉ thu nhỏ một mô hình lớn, mà thiết kế hai thực thể hoàn toàn khác biệt. Các biến thể "Edge" (E2B và E4B) được xây dựng trên triết lý "nén bộ nhớ để đổi lấy tính toán", trong khi các mô hình máy chủ "chi bộ nhớ để tiết kiệm tính toán".
+
+| Đặc tính | Mô hình Edge (Gemma 4 E2B/E4B) | Mô hình Server (Gemma 4 26B/31B) |
+| :--- | :--- | :--- |
+| Hạn chế chính | Khan hiếm DRAM / Pin | Chi phí tính toán (FLOPS) |
+| Chiến lược bộ nhớ | Nén KV Cache triệt để | Dùng DRAM để giữ độ chính xác cao |
+| Tỷ lệ GQA | Đồng nhất 8:1 hoặc 4:1 | Chọn lọc 2:1 đến 8:1 |
+| Bảng Embedding | Per-Layer Embeddings (PLE) trong Flash | Một chiều ẩn rộng duy nhất |
+| Tối ưu ngữ cảnh | Chia sẻ KV giữa các lớp (giảm 83%) | KV cache độc lập mỗi lớp |
+
+Sự đổi mới tinh vi nhất ở đây là Per-Layer Embeddings (PLE). Với mẫu E2B, khoảng 46% ngân sách tham số được dành cho 35 bảng embedding riêng biệt. Vì các bảng này được "đỗ" trong bộ nhớ Flash thay vì DRAM hoạt động, chúng gần như "miễn phí" về mặt dấu chân bộ nhớ, cho phép một mô hình nhỏ duy trì khả năng ngữ nghĩa cao mà không làm treo hệ thống.
+
+### "Thuế" toán học và hình thái mô hình
+
+Để một mô hình chạy cục bộ, tổng dấu chân bộ nhớ phải thỏa mãn:
+
+`M_total = M_weights + M_KV_cache + M_activations ≤ M_DRAM`
+
+Trong đó `M_weights` được giảm qua lượng tử hóa 4-bit, `M_KV_cache` được nén qua GQA, và các hoạt hóa được quản lý bởi các bộ thực thi tối ưu như llama.cpp.
+
+Dữ liệu thực nghiệm cho thấy Gemma-4-E4B hiện là điểm Pareto tối ưu nhất cho các nhiệm vụ suy luận, đạt độ chính xác gấp đôi các mẫu siêu nhỏ như Phi-4-mini trong khi vẫn nằm trong giới hạn VRAM của phần cứng cao cấp (≥16GB RAM). Tuy nhiên, với các thiết bị phổ thông chỉ có 2-4GB RAM, những cái tên như Qwen3 0.6B là lựa chọn khả dĩ duy nhất, dù phải đánh đổi bằng việc hay vi phạm định dạng đầu ra.
+
+| Mô hình | Kiến trúc | Tham số Hoạt động (B) | VRAM TB (GB) | Độ trễ (s) | Độ chính xác |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| Gemma-4-E4B | MoE | 4.0 | 14.89 | 5.458 | 0.675 |
+| Gemma-4-E2B | MoE | 2.0 | 9.54 | 4.913 | 0.493 |
+| Phi-4-mini | Dense | 3.8 | 7.15 | 3.983 | 0.203 |
+| Qwen3-8B | Dense | 8.0 | 15.26 | 5.041 | 0.322 |
+| Gemma-4-26B | MoE | 3.8 | 48.07 | 8.041 | 0.663 |
+
+## The Friction: Sự thật trần trụi đằng sau Đám mây
+
+Cách tiếp cận "ưu tiên đám mây" (cloud-first) trong công nghệ giáo dục hiện nay chứa đầy những rủi ro hệ thống mà các brochure quảng cáo thường lờ đi.
+
+### Cái bẫy ngoại lãnh thổ và Chủ quyền số
+
+Cốt lõi của chủ quyền số là quyền kiểm soát: kiểm soát dữ liệu, công nghệ và vận hành trong ranh giới pháp lý. Khi một trường học dùng LLM đám mây, họ bị phơi nhiễm trước các "luật ngoại lãnh thổ". Dữ liệu xử lý tại nước ngoài có thể bị chính quyền sở tại yêu cầu truy cập mà trường học không có quyền từ chối. Gartner dự báo đến năm 2027, hơn 40% các vụ vi phạm dữ liệu AI sẽ đến từ việc sử dụng AI tạo sinh xuyên biên giới không đúng cách.
+
+Tại châu Âu, các sáng kiến "Digital Commons" hay việc thắt chặt GDPR đang được đẩy mạnh để đảm bảo "lớp trí tuệ" của xã hội không nằm ngoài tầm kiểm soát. Rủi ro không chỉ là lý thuyết; một khi dữ liệu đã bị mô hình đám mây "nuốt" để huấn luyện, việc đòi lại quyền kiểm soát là gần như bất khả thi.
+
+### Sự bành trướng của "Rác giáo dục"
+
+Nguy hiểm hơn cả rủi ro pháp lý là sự xói mòn về sư phạm. AI tạo sinh đang tràn ngập lớp học với "slop" — những nội dung chất lượng thấp, thiếu sự kiểm chứng của con người.
+
+- **Sai lệch sự thật**: AI hay "ảo tưởng" ra những lỗi nghe rất lọt tai, như việc khẳng định tốc độ phản ứng enzyme tăng vô hạn theo nồng độ enzyme (trong khi thực tế nó sẽ bão hòa).
+
+- **Lười biếng nhận thức**: Việc tiếp xúc với những phản hồi AI đầy tự tin nhưng "không gốc rễ" khiến học sinh mất đi kỹ năng đào sâu bản chất, chỉ tìm kiếm những câu trả lời hời hợt.
+
+- **Lệch tông văn hóa**: Các SLM huấn luyện trên dữ liệu tiếng Anh áp đảo thường mặc định trả về tiếng Anh hoặc phong cách phương Tây, âm thầm xóa nhòa bản sắc ngôn ngữ và văn hóa địa phương.
+
+## The Synthesis: Kiến trúc Mạng lưới Giáo dục Riêng tư
+
+Để giải quyết mâu thuẫn giữa năng lực AI và chủ quyền dữ liệu, chúng ta cần một quy trình mà ở đó AI là cục bộ, cá nhân và được quản trị nghiêm ngặt.
+
+### QUAD: Khung triển khai thống nhất
+
+Điểm nghẽn kỹ thuật khi chạy nhiều "gia sư AI" chuyên biệt (toán, sử, lập trình) trên một máy tính bảng là việc phải tải nhiều tệp mô hình khổng lồ. QUAD (Lượng tử hóa với Distillation thích ứng thống nhất) cho phép coi các trọng số LoRA là đầu vào thời gian thực thay vì nhúng tĩnh vào mô hình.
+
+Công thức của sự tiêm nhập động này là:
+
+$$Y = (W + \Delta W) X$$
+
+Trong đó $W$ là trọng số mô hình nền tảng 4-bit cố định và $\Delta W$ là adapter LoRA được tải động. QUAD giúp cải thiện tốc độ thực thi gấp 4 lần và giảm 6 lần dung lượng bộ nhớ.
+
+### Học liên kết (Federated Learning): Tấm khiên bảo mật
+
+Để cải thiện mô hình mà không cần nhìn thấy dữ liệu của học sinh, các trường học nên áp dụng Học liên kết (FL). Trong khung FL, dữ liệu của học sinh được xử lý ngay trên máy tính bảng. Chỉ các "tham số mô hình đã tối ưu" — tức là những gì AI học được từ lỗi sai của học sinh — được gửi về máy chủ trung tâm.
+
+Chiến lược cộng hợp trọng số thích ứng sẽ được sử dụng:
+
+`θ_global = Σ(w_i × θ_i)` for i=1 to n
+
+Điều này đảm bảo mô hình chung ngày càng thông minh hơn về những hiểu lầm thường gặp của học sinh, trong khi dữ liệu thô — bài tập, điểm số, hành vi — không bao giờ rời khỏi phòng học.
+
+### Lập hồ sơ phần cứng cho Lớp học
+
+Triển khai những mô hình này đòi hỏi hiểu biết sâu sắc về phần cứng máy tính bảng hiện nay. Bảng dưới đây liệt kê những thiết bị phổ biến nhất mà trường học phát hành hoặc học sinh sở hữu vào năm 2026, cùng với khả năng tương thích của chúng với các SLM cụ thể.
+
+| Thiết bị | Bộ xử lý | RAM | Loại lưu trữ | SLM được khuyến cáo |
+| :--- | :--- | :--- | :--- | :--- |
+| Apple iPad Air (M4) | Apple M4 | 8GB | Unified | Gemma-4-E2B (4-bit) |
+| Samsung Tab S11 Ultra | Dimensity 9400+ | 12/16GB | UFS 4.0 | Gemma-4-E4B (4-bit) |
+| Lenovo Tab P12 Pro | Snapdragon 870 | 8GB | UFS 3.1 | Phi-4-mini (4-bit) |
+| OnePlus Pad Lite | Helio G100 | 6GB | eMMC/UFS | Qwen3-0.6B (8-bit) |
+| Microsoft Surface Go 4 | Intel N200 | 4/8GB | NVMe | Phi-3.5-mini (4-bit) |
+
+Hiểu biết quan trọng ở đây là khi các mô hình "đám mây" là độc lập phần cứng, các mô hình "tự chủ" lại "thân thiết" với phần cứng. Lựa chọn lượng tử hóa (4-bit vs 8-bit) và sử dụng công nghệ như QLoRA (Quantization Low-Rank Adaptation) là cần thiết để bảo tồn độ chính xác trong những giới hạn bộ nhớ chật hẹp.
+
+## Case in Point: Người tập sự kỹ thuật số
+
+Hãy tưởng tượng một lớp học năm 2026. Leo đang vật lộn với khái niệm lực hướng tâm. Trong môi trường truyền thống, cậu có thể quá ngại để giơ tay lần thứ ba. Trong môi trường đám mây, "dữ liệu thất bại" của Leo có thể bị thu thập để xây dựng hồ sơ dự đoán cho các công ty tuyển dụng trong tương lai.
+
+Nhưng trong Lớp học Tự chủ, máy tính bảng của Leo chạy một mô hình Llama-3.3-8B được lượng tử hóa cục bộ. AI không chỉ đưa ra đáp án; nó sử dụng "giàn giáo đối thoại" (dialogic scaffolding):
+
+- **Chẩn đoán**: AI nhận diện Leo đang nhầm lẫn giữa vận tốc và gia tốc.
+
+- **Can thiệp**: Nó đưa ra một ví dụ thực tế về chiếc xe vào cua, sử dụng NPU (bộ xử lý thần kinh) của máy tính bảng để tạo ra mô phỏng thời gian thực.
+
+- **Riêng tư**: Mọi khoảnh khắc "Aha!" và cả những sai lầm ban đầu của Leo đều được mã hóa bằng AES-256. Giáo viên nhận được một bảng điều khiển tổng hợp về "những hiểu lầm chung của cả lớp" mà không cần xâm phạm lịch sử trò chuyện riêng tư của Leo.
+
+Đây chính là khung "Keep, Change, Center" (Giữ, Thay đổi, Trung tâm) vào được áp dụng. Chúng ta giữ những phương pháp đã được chứng minh về suy vết kiến thức; chúng ta thay đổi việc cung cấp thông qua AI tạo sinh; và chúng ta đặt con người vào trung tâm, tạo điều kiện cho sự tự chủ học tập của học sinh.
+
+## Critical Reflection: Cái giá của sự Tự do
+
+Chuyển sang SLM on-device không phải là một "viên đạn bạc". Nó đòi hỏi những sự đánh đổi khốc liệt.
+
+### Đánh đổi kỹ thuật: Độ chính xác vs VRAM
+
+"Vực thẳm lượng tử hóa" là có thật. Việc chuyển từ FP16 sang INT4 giảm 75% kích thước mô hình nhưng có thể làm suy giảm đột ngột khả năng suy luận. Các mô hình dưới 3 tỷ tham số vẫn thường xuyên gặp lỗi:
+
+- **Tuân thủ định dạng**: Chúng hay thêm những lời "tán gẫu" thừa thãi vào các tệp JSON.
+
+- **Suy luận số học**: Việc đếm số ký tự hay tính toán đa bước vẫn chưa đáng tin cậy ở quy mô siêu nhỏ.
+
+- **Lệch ngôn ngữ**: Các mô hình có thể mặc định trả về tiếng Anh hoặc diễn giải sai các mã ISO ngôn ngữ ("pt").
+
+### Kinh tế và Đạo đức
+
+Sự chuyển dịch từ Opex (phí token đám mây hàng tháng) sang Capex (đầu tư phần cứng ban đầu) là rất lớn. Mặc dù tự vận hành SLM có thể rẻ hơn 70% so với thuê GPT-4o về lâu dài, nhưng giai đoạn chuẩn bị hạ tầng và dữ liệu có thể kéo dài từ 6 đến 12 tháng.
+
+| Lượng yêu cầu hàng ngày | Chi phí GPT-4o ước tính/tháng | Chi phí SLM tự vận hành/tháng |
+| :--- | :--- | :--- |
+| 50,000 / ngày | $3,450 | $933 |
+| 100,000 / ngày | $6,900 | $933 |
+| 500,000 / ngày | $34,500 | $1,866 (2 GPU) |
+| 1,000,000 / ngày | $69,000 | $3,732 (4 GPU) |
+
+Về mặt đạo đức, Lớp học Tự chủ loại bỏ rủi ro "hồ sơ hóa dự đoán" từ bên thứ ba, nhưng lại đặt gánh nặng giảm thiểu thiên kiến lên vai nhà trường. Các mô hình nhỏ có thể kế thừa những định kiến từ dữ liệu huấn luyện tổng hợp (synthetic data), đòi hỏi một khung nguyên tắc REP (Chính trực, Đạo đức, Có trách nhiệm) chặt chẽ.
+
+## The Horizon: Giành lại "Tài sản số chung"
+
+Chuyển dịch sang SLM on-device không chỉ là một cuộc di cư về kỹ thuật; đó là một hành động kháng cự sư phạm. Bằng cách đưa AI về vùng biên, chúng ta bảo vệ thói quen tư duy phản biện khỏi sự xói mòn của việc lệ thuộc vào đám mây.
+
+Lớp học Tự chủ là mô hình duy nhất cho phép chúng ta cung cấp một nền giáo dục cá nhân hóa đẳng cấp thế giới mà không cần phải "bán" tương lai của học sinh cho những kẻ trả giá cao nhất. Lộ trình 2026-2030 sẽ chứng kiến sự bùng nổ của các "SLM Factory" — những nền tảng công nghiệp hóa việc tạo ra các mô hình tinh chỉnh, chuyên biệt hóa cho từng môn học và chạy mượt mà trên lòng bàn tay của mỗi học sinh.
+
+Để duy trì vị thế trong một xã hội bị AI chi phối, các tổ chức giáo dục phải chuyển đổi từ việc "sở hữu hạ tầng" sang "sở hữu kết quả". Lớp học Tự chủ không chỉ là nơi học sinh tiếp thu kiến thức; đó là không gian nơi danh tính số của các em được bảo vệ. Kỷ nguyên của "rác AI" đã đến lúc phải kết thúc; kỷ nguyên của Lớp học Tự chủ bắt đầu từ đây.
+
+## Tham khảo
+
+1. Small Language Models: Phi-4 vs Gemma 3 vs Llama 3.3 — Enterprise Edge AI [2026], truy cập vào tháng 4 28, 2026, https://www.meta-intelligence.tech/en/insight-slm-enterprise
+2. The Impact of AI on Digital Sovereignty | Thales, truy cập vào tháng 4 28, 2026, https://cpl.thalesgroup.com/blog/cybersecurity/impact-of-ai-on-digital-sovereignty
+3. Exploring privacy issues in the age of AI - IBM, truy cập vào tháng 4 28, 2026, https://www.ibm.com/think/insights/ai-privacy
+4. AI-Generated "Slop" in Online Biomedical Science Educational ..., truy cập vào tháng 4 28, 2026, https://pmc.ncbi.nlm.nih.gov/articles/PMC12634010/
+5. Tired of AI in an educational setting : r/Teachers - Reddit, truy cập vào tháng 4 28, 2026, https://www.reddit.com/r/Teachers/comments/1rxdehz/tired_of_ai_in_an_educational_setting/
+6. Google's Gemma 4 is Weirder than you Realize | by Devansh | Apr ..., truy cập vào tháng 4 28, 2026, https://machine-learning-made-simple.medium.com/googles-gemma-4-is-weirder-than-you-realize-17d00d95b0d5
+7. How much RAM & storage do you actually need in a tablet in 2026? - Reddit, truy cập vào tháng 4 28, 2026, https://www.reddit.com/r/tablets/comments/1su86jl/how_much_ram_storage_do_you_actually_need_in_a/
+8. Best Tablets for Students in the US (2026) - Fueler, truy cập vào tháng 4 28, 2026, https://fueler.io/blog/best-tablets-for-students-in-the-us
+9. Gemma 4, Phi-4, and Qwen3: Accuracy–Efficiency Tradeoffs in Dense and MoE Reasoning Language Models - arXiv, truy cập vào tháng 4 28, 2026, https://arxiv.org/html/2604.07035v1
+10. [2604.07035] Gemma 4, Phi-4, and Qwen3: Accuracy-Efficiency Tradeoffs in Dense and MoE Reasoning Language Models - arXiv, truy cập vào tháng 4 28, 2026, https://arxiv.org/abs/2604.07035
+11. Fine-tuning LLMs Guide | Unsloth Documentation, truy cập vào tháng 4 28, 2026, https://unsloth.ai/docs/get-started/fine-tuning-llms-guide
+12. Quantization with Unified Adaptive Distillation to enable multi-LoRA based one-for-all Generative Vision Models on edge - arXiv, truy cập vào tháng 4 28, 2026, https://arxiv.org/html/2603.29535v1
+13. Use local small language models (SLMs) in Azure App Service - Microsoft Learn, truy cập vào tháng 4 28, 2026, https://learn.microsoft.com/en-us/azure/app-service/scenario-ai-local-small-language-model
+14. (PDF) Gemma 4, Phi-4, and Qwen3: Accuracy-Efficiency Tradeoffs in ..., truy cập vào tháng 4 28, 2026, https://www.researchgate.net/publication/403641917_Gemma_4_Phi-4_and_Qwen3_Accuracy-Efficiency_Tradeoffs_in_Dense_and_MoE_Reasoning_Language_Models
+15. Less Is More: Engineering Challenges of On-Device Small Language Model Integration in a Mobile Application - arXiv, truy cập vào tháng 4 28, 2026, https://arxiv.org/html/2604.24636v1
+16. The European marathon towards digital sovereignty | Digital Watch Observatory, truy cập vào tháng 4 28, 2026, https://dig.watch/updates/the-european-marathon-towards-digital-sovereignty
+17. Summit on European Digital Sovereignty delivers landmark commitments, truy cập vào tháng 4 28, 2026, https://uk.diplomatie.gouv.fr/en/summit-european-digital-sovereignty-delivers-landmark-commitments
+18. AI tutor time on task: Total time students in the AI group spent... - ResearchGate, truy cập vào tháng 4 28, 2026, https://www.researchgate.net/figure/AI-tutor-time-on-task-Total-time-students-in-the-AI-group-spent-interacting-with-the_fig2_392839220
+19. AI in Higher Education: Protecting Student Data Privacy | EdTech Magazine, truy cập vào tháng 4 28, 2026, https://edtechmagazine.com/higher/article/2026/01/ai-higher-education-protecting-student-data-privacy-perfcon
+20. Privacy-Preserved Automated Scoring using Federated Learning for Educational Research, truy cập vào tháng 4 28, 2026, https://arxiv.org/html/2503.11711v1
+21. Fine-Tuning LLMs: LoRA, Quantization, and Distillation Simplified - DEV Community, truy cập vào tháng 4 28, 2026, https://dev.to/iamfaham/fine-tuning-llms-lora-quantization-and-distillation-simplified-12nf
+22. The Path to Conversational AI Tutors: Integrating Tutoring Best Practices and Targeted Technologies to Produce Scalable AI Agents - ResearchGate, truy cập vào tháng 4 28, 2026, https://www.researchgate.net/publication/401133086_The_Path_to_Conversational_AI_Tutors_Integrating_Tutoring_Best_Practices_and_Targeted_Technologies_to_Produce_Scalable_AI_Agents
+23. The Challenges of Data Privacy and Cybersecurity in Cloud Computing and Artificial Intelligence (AI) Applications for EQA Organizations - PMC, truy cập vào tháng 4 28, 2026, https://pmc.ncbi.nlm.nih.gov/articles/PMC12743334/
+24. Opinion: AI in schools could be a disaster, but it doesn't have to be - Local News Matters, truy cập vào tháng 4 28, 2026, https://localnewsmatters.org/2026/04/27/ai-schools-disaster-not-inevitable-opinion/
+25. Enhancing deep learning in AI-enhanced education: a dual mediation model of cognitive load and learning motivation through interaction quality - Frontiers, truy cập vào tháng 4 28, 2026, https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2026.1768822/full
+26. Cognitive Load Theory: How to Optimize Learning - Let's Go Learn, truy cập vào tháng 4 28, 2026, https://www.letsgolearn.com/education-reform/cognitive-load-theory-how-to-optimize-learning/
+27. Intelligent Tutoring Systems: 7 Research-Backed Principles for Building an Effective AI Tutor, truy cập vào tháng 4 28, 2026, https://thirdspacelearning.com/us/blog/intelligent-tutoring-systems/
+28. Challenging Cognitive Load Theory: The Role of Educational Neuroscience and Artificial Intelligence in Redefining Learning Efficacy - PMC, truy cập vào tháng 4 28, 2026, https://pmc.ncbi.nlm.nih.gov/articles/PMC11852728/
+29. What the research shows about generative AI in tutoring | Brookings, truy cập vào tháng 4 28, 2026, https://brookings.edu/articles/what-the-research-shows-about-generative-ai-in-tutoring/
+30. Harvard just proved AI tutors beat classrooms. Now what? : r/artificial - Reddit, truy cập vào tháng 4 28, 2026, https://www.reddit.com/r/artificial/comments/1q4t8b5/harvard_just_proved_ai_tutors_beat_classrooms_now/
+31. AI Use in Schools Is Quickly Increasing but Guidance Lags Behind - RAND, truy cập vào tháng 4 28, 2026, https://www.rand.org/pubs/research_reports/RRA4180-1.html
+32. Michael Ranney's research works | Princeton University and other places - ResearchGate, truy cập vào tháng 4 28, 2026, https://www.researchgate.net/scientific-contributions/Michael-Ranney-2005665276
+33. Deploy Small Language Models (SLMs) Faster: The Case for Owning Outcomes Over Infrastructure - Uniphore, truy cập vào tháng 4 28, 2026, https://www.uniphore.com/blog/deploy-small-language-models-faster-the-case-for-owning-outcomes-over-infrastructure/
+34. The "Third Way" to Space Power: Europe's Digital Sovereignty Advantage, truy cập vào tháng 4 28, 2026, https://law.stanford.edu/2026/01/23/the-third-way-to-space-power-europes-digital-sovereignty-advantage/
+35. The Landscape of AI in Science Education: What is Changing and How to Respond Xiaoming Zhai1, Kent Crippen2 - arXiv, truy cập vào tháng 4 28, 2026, https://arxiv.org/pdf/2602.18469
+36. Generative AI-Driven Learning Path Optimization: A Framework Based on Transformer and Cognitive Load Theory - Web of Proceedings - Francis Academic Press, truy cập vào tháng 4 28, 2026, https://webofproceedings.org/proceedings_series/ESSP/GEMMSD%202025/SC610325.pdf
+37. What Are Small Language Models (SLMs)? - Oracle, truy cập vào tháng 4 28, 2026, https://www.oracle.com/artificial-intelligence/small-language-models/
