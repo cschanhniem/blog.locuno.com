@@ -35,13 +35,13 @@
     "deploy": "pnpm exec wrangler deploy"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.8",
-    "@astrojs/mdx": "^5.0.0",
-    "@astrojs/partytown": "^2.1.4",
-    "@astrojs/rss": "^4.0.14",
-    "@astrojs/sitemap": "^3.7.1",
+    "@astrojs/check": "^0.9.9",
+    "@astrojs/mdx": "^5.0.4",
+    "@astrojs/partytown": "2.1.7",
+    "@astrojs/rss": "4.0.18",
+    "@astrojs/sitemap": "3.7.2",
     "@tailwindcss/vite": "^4.1.12",
-    "astro": "^6.1.1",
+    "astro": "^6.2.2",
     "astro-expressive-code": "^0.41.3",
     "astro-icon": "^1.1.5",
     "astro-pagefind": "^1.8.6",
@@ -50,7 +50,7 @@
     "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
-    "@astrojs/cloudflare": "^13.1.4",
+    "@astrojs/cloudflare": "^13.3.1",
     "@iconify-json/lucide": "^1.2.81",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^24.12.2",
